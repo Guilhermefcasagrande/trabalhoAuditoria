@@ -7,13 +7,15 @@ package Testes;
 
 import Conexao.ConexaoPostgres;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  *
  * @author Guilherme
  */
 public class Teste {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Connection c = new ConexaoPostgres().getConnection();
+        c.close();
     }
 }
