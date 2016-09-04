@@ -61,22 +61,12 @@
                 <li><a href="icons.jsp"><svg class="glyph stroked star"><use xlink:href="#stroked-star"></use></svg> Icons</a></li>
                 <li class="parent ">
                     <a href="#">
-                        <span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Dropdown 
+                        <span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Cadastros 
                     </a>
                     <ul class="children collapse" id="sub-item-1">
                         <li>
-                            <a class="" href="#">
-                                <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 1
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 2
-                            </a>
-                        </li>
-                        <li>
-                            <a class="" href="#">
-                                <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 3
+                            <a class="" href="InsereCidade.jsp">
+                                <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Cidades
                             </a>
                         </li>
                     </ul>

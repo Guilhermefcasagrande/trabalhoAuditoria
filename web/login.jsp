@@ -47,8 +47,8 @@
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Senha" name="senha" type="password" value="">
                                 </div>
-                                <input class="btn btn-success" type="submit" value="Entrar" id="login">
-                                <!--<a href="index.jsp">Clique aqui</a>-->
+                                <!--<input class="btn btn-success" type="submit" value="Entrar" id="login">-->
+                                <a href="index.jsp">Clique aqui</a>
                             </fieldset>
                         </form>
                     </div>
