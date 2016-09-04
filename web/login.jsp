@@ -1,3 +1,5 @@
+<%@page import="Controle.UserLogin"%>
+<%@page import="Modelo.User"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,6 +19,21 @@
     </head>
 
     <body>
+        <%
+        String er = "";
+        if (request.getParameter("login") != null) {
+            String auxLogin = request.getParameter("usuario");
+            String auxSenha = request.getParameter("senha");
+            User usuario = UserLogin.getUser(auxLogin, auxSenha);
+            if (usuario != null) {
+                session.setAttribute("usuario", usuario);
+                response.sendRedirect("/index.jsp");
+                er = "";
+            } else {
+                er = "Login ou senha incorretos! Tente Novamente.";
+            }
+        }
+    %>
         <div class="row">
             <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
@@ -25,16 +42,17 @@
                         <form role="form" method="post" name="Form">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Usuario" name="usuario" type="email" autofocus="">
+                                    <input class="form-control" placeholder="Usuario" name="usuario" type="text" autofocus="">
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Senha" name="senha" type="password" value="">
                                 </div>
-                                <!--<input class="btn btn-success" type="submit" value="Entrar" id="login">-->
-                                <a href="index.jsp">Clique aqui</a>
+                                <input class="btn btn-success" type="submit" value="Entrar" id="login">
+                                <!--<a href="index.jsp">Clique aqui</a>-->
                             </fieldset>
                         </form>
                     </div>
+                    <h1><%=er%></h1> 
                 </div>
             </div><!-- /.col-->
         </div><!-- /.row -->	
