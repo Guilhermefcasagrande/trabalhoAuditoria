@@ -62,7 +62,7 @@
             </div><!--/.row-->	
 
             <div class="row">
-                <form role="form" action="insereCidade">
+                <form role="form" action="insereCidade" method="post">
                     <div class="form-group">
                         <label>CEP</label>
                         <input class="form-control" placeholder="Ex: 00000000" name="cep">

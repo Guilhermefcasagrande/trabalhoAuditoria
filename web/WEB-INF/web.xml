@@ -2,15 +2,23 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>InsereCidadeServlet</servlet-name>
-        <servlet-class>Controle.InsereCidadeServlet</servlet-class>
+        <servlet-class>Servlets.InsereCidadeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>InsereCidadeServlet</servlet-name>
         <url-pattern>/InsereCidadeServlet</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>3</session-timeout>
     </session-config>
+    <servlet>
+        <servlet-name>servletOiMundo</servlet-name>
+        <servlet-class>
+           Servlets.OiMundo
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>servletOiMundo</servlet-name>
+        <url-pattern>/oi</url-pattern>
+    </servlet-mapping>
 </web-app>
