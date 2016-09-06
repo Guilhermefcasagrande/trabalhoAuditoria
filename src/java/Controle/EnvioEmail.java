@@ -5,10 +5,6 @@
  */
 package Controle;
 
-/**
- *
- * @author Guilherme
- */
 import java.util.Properties;
 import javax.mail.Address;
 import javax.mail.Message;
@@ -19,9 +15,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class JavaMailApp {
+/**
+ *
+ * @author Guilherme
+ */
+public class EnvioEmail {
 
-    public static void main(String[] args) {
+    public void enviaEmail() {
         Properties props = new Properties();
         /**
          * Parâmetros de conexão com servidor Gmail
@@ -53,7 +53,9 @@ public class JavaMailApp {
                     .parse("guilhermefranciscocasagrande@gmail.com");
 
             message.setRecipients(Message.RecipientType.TO, toUser);
-            message.setSubject("Enviando email com JavaMail");//Assunto
+            //Assunto
+            message.setSubject("Enviando email com JavaMail");
+            //Corpo
             message.setText("Teste de envio de email para trablho do Paulinho. Se receber, responde essa porra. By: Guilherme F. C.");
             /**
              * Método para enviar a mensagem criada
@@ -66,5 +68,4 @@ public class JavaMailApp {
             throw new RuntimeException(e);
         }
     }
-
 }
