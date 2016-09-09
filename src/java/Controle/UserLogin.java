@@ -20,6 +20,7 @@ public class UserLogin {
     
     private static String sqlLoginUser = "select * from usuario where login = ? and senha = ?";
     
+    /*
     public static User getUser(String login, String senha){
         User usuario = null;
         try {
@@ -42,4 +43,5 @@ public class UserLogin {
             return usuario;
         }
     }
+*/
 }

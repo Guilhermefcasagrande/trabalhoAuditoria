@@ -20,7 +20,7 @@ public class ConexaoPostgres {
     private static String usuario = "postgres";
     private static String senha = "1";
     
-    public static Connection getConnection(){
+    public Connection getConnection(){
      
         try {
             System.out.println("conexão feita com Sucesso");
