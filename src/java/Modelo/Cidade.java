@@ -11,6 +11,12 @@ package Modelo;
  */
 public class Cidade {
 
+    public Cidade(int cep, String nome, String estado) {
+        this.cep = cep;
+        this.nome = nome;
+        this.estado = estado;
+    }
+
     private int cep;
     private String nome;
     private String estado;

@@ -35,21 +35,21 @@ public class InsereCidadeServlet extends HttpServlet {
         String estado = request.getParameter("estado");
 
         // monta um objeto cidade
-        Cidade cidade = new Cidade();
+        //Cidade cidade = new Cidade();
         
-        cidade.setCep(Integer.parseInt(cep));
-        cidade.setNome(nome);
-        cidade.setEstado(estado);
+        //cidade.setCep(Integer.parseInt(cep));
+        //cidade.setNome(nome);
+        //cidade.setEstado(estado);
 
         // salva a cidade
         CidadeDao dao = new CidadeDao();
-        dao.adiciona(cidade);
+        //dao.adiciona(cidade);
 
         // imprime o nome da cidade que foi adicionada
         out.println("<html>");
         out.println("<body>");
-        out.println("Cidade " + cidade.getNome()
-                + " adicionada com sucesso");
+        //out.println("Cidade " + cidade.getNome()
+        //        + " adicionada com sucesso");
         out.println("</body>");
         out.println("</html>");
     }

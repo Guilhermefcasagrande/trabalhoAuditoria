@@ -1,9 +1,18 @@
+<%-- 
+    Document   : trataCidade
+    Created on : 10/10/2016, 21:00:39
+    Author     : Guilherme
+--%>
+
+<%@page import="Controle.CidadeDB"%>
+<%@page import="Modelo.Cidade"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Lumino - Tables</title>
+        <title>Cadastro de Cidade</title>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/datepicker3.css" rel="stylesheet">
@@ -13,11 +22,9 @@
         <!--Icons-->
         <script src="js/lumino.glyphs.js"></script>
     </head>
-
     <body>
         <%@include file="menu.html" %>
         <%@include file="header.html" %>
-        
         <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
             <div class="row">
                 <ol class="breadcrumb">
@@ -33,29 +40,37 @@
             </div><!--/.row-->	
 
             <div class="row">
-                <form role="form" action="trataCidade.jsp" method="post">
-                    <div class="form-group">
-                        <label>CEP</label>
-                        <input class="form-control" placeholder="Ex: 00000000" name="cep" id="cep">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Nome</label>
-                        <input class="form-control" placeholder="Ex: Rio do Oeste" name="nome" id="nome">
-                    </div>
+                <div class="col-lg-12">
+                    <%
 
-                    <div class="form-group">
-                        <label>Estado</label>
-                        <input class="form-control" placeholder="Ex: Santa Catarina" name="estado" id="estado">
-                    </div>
-                    
-                    <div class="form-group">
-                        <input class="btn btn-primary" type="submit" value="Cadastrar">
-                    </div>
-                </form>
+                        int cep = Integer.parseInt(request.getParameter("cep"));
+                        String nome = request.getParameter("nome");
+                        String estado = request.getParameter("estado");
+
+                        Cidade cidade = new Cidade(cep, nome, estado);
+                        
+                        boolean inseriu = CidadeDB.insereCidade(cidade);
+                        
+                        if (inseriu) {
+                            out.println("Cidade inserida com sucesso!");
+                            out.println("<br />");
+                            out.println("<a href=\"InsereCidade.jsp\">Voltar</a>");
+                        } else {
+                            out.println("<div class=\"alert bg-danger\" role=\"alert\">");
+                            out.println("<svg class=\"glyph stroked cancel\">");
+                            out.println("<use xlink:href=\"#stroked-cancel\"></use>");
+                            out.println("</svg> Erro no cadastro da cidade");
+                            out.println("<a href=\"InsereCidade.jsp\" class=\"pull-right\">");
+                            out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                            out.println("</a>");
+                            out.println("</div>");
+                        }
+                    %>  
+                </div>
             </div>
 
         </div><!--/.main-->
+
 
         <script src="js/jquery-1.11.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -81,7 +96,6 @@
                 if ($(window).width() <= 767)
                     $('#sidebar-collapse').collapse('hide')
             })
-        </script>	
+        </script>
     </body>
-
 </html>
