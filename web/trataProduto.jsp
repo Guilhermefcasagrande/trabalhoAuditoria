@@ -1,12 +1,11 @@
 <%-- 
-    Document   : trataCidade
-    Created on : 10/10/2016, 21:00:39
+    Document   : trataProduto
+    Created on : 14/10/2016, 18:42:13
     Author     : Guilherme
 --%>
 
-<%@page import="Controle.CidadeDB"%>
-<%@page import="Modelo.Cidade"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <!DOCTYPE html>
 <html>
     <head>
@@ -35,7 +34,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Incluir Nova Cidade</h1>
+                    <h1 class="page-header">Incluir Novo Produto</h1>
                 </div>
             </div><!--/.row-->	
 
@@ -43,14 +42,14 @@
                 <div class="col-lg-12">
                     <%
 
-                        int cep = Integer.parseInt(request.getParameter("cep"));
-                        String nome = request.getParameter("nome");
-                        String estado = request.getParameter("estado");
+                        String desc = request.getParameter("descricao");
+                        int qtd = Integer.parseInt(request.getParameter("qtd"));
+                        double preco = Double.parseDouble(request.getParameter("preco"));
 
                         Cidade cidade = new Cidade(cep, nome, estado);
-                        
+
                         boolean inseriu = CidadeDB.insereCidade(cidade);
-                        
+
                         if (inseriu) {
                             out.println("<div class=\"alert bg-success\" role=\"alert\">");
                             out.println("<svg class=\"glyph stroked checkmark\">");
@@ -104,3 +103,4 @@
         </script>
     </body>
 </html>
+

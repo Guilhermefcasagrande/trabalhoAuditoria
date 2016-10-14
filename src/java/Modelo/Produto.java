@@ -10,10 +10,18 @@ package Modelo;
  * @author Guilherme
  */
 public class Produto {
+
     private int proCodigo;
     private String descricao;
     private float preco;
     private int qtdEstoque;
+
+    public Produto(int proCodigo, String descricao, float preco, int qtdEstoque) {
+        this.proCodigo = proCodigo;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.qtdEstoque = qtdEstoque;
+    }
 
     public int getProCodigo() {
         return proCodigo;
@@ -46,6 +54,5 @@ public class Produto {
     public void setQtdEstoque(int qtdEstoque) {
         this.qtdEstoque = qtdEstoque;
     }
-    
-    
+
 }

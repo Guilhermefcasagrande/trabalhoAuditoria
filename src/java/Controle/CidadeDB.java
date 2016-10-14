@@ -17,21 +17,17 @@ import java.sql.SQLException;
  */
 public class CidadeDB {
 
-    private static Connection connection;
     //private static String sqlTodos = "select * from cidade";
     private static String sqlInsere = "insert into cidade (cep, nome, estado) values (?, ?, ?)";
     //private static String sqlExclui = "delete from apartamento where apt_numero = ?";
     //private static String sqlAltera = "update apartamento set qtd_quartos = ?, area = ?, pro_codigo = ?, tipo_codigo =?  where apt_numero = ?";
 
-    public CidadeDB() {
-        this.connection = new ConexaoPostgres().getConnection();
-    }
 
     public static boolean insereCidade(Cidade cidade) {
         boolean inseriu = false;
         try {
-
-            PreparedStatement pstmt = connection.prepareStatement(sqlInsere);
+            Connection conexao = ConexaoPostgres.getConnection();
+            PreparedStatement pstmt = conexao.prepareStatement(sqlInsere);
             System.out.println("Cheguei!!3");
             pstmt.setInt(1, cidade.getCep());
             pstmt.setString(2, cidade.getNome());

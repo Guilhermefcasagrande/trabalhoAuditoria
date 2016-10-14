@@ -16,20 +16,28 @@ import java.util.logging.Logger;
  * @author Guilherme
  */
 public class ConexaoPostgres {
-    private static String url = "jdbc:postgresql://localhost:5432/trabAud";
+    
+    private static String driver = "org.postgresql.Driver";
+    private static String servidor = "localhost";
+    private static String banco = "trabAud";
     private static String usuario = "postgres";
     private static String senha = "1";
-    
-    public Connection getConnection(){
-     
+    private static String url = "jdbc:postgresql://" + servidor + ":5432/" + banco;
+
+    public static Connection getConnection() {
+        Connection conexao = null;
+
         try {
-            System.out.println("conexão feita com Sucesso");
-            return DriverManager.getConnection(url, usuario, senha);
-        } catch (SQLException ex) {
-            System.out.println("Falha de Conxão");
-            throw new RuntimeException(ex);
+            Class.forName(driver);
+            conexao = DriverManager.getConnection(url, usuario, senha);
+            System.out.println("Conexão com sucesso");
+
+        } catch (ClassNotFoundException erro) {
+            System.out.println("Erro de driver " + erro.getMessage());
+        } catch (SQLException erro) {
+            System.out.println("Erro de SQL " + erro.getMessage());
+        } finally {
+            return conexao;
         }
-        
     }
-    
 }
