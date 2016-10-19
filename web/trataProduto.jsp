@@ -4,6 +4,7 @@
     Author     : Guilherme
 --%>
 
+<%@page import="Modelo.Produto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!DOCTYPE html>
@@ -46,7 +47,7 @@
                         int qtd = Integer.parseInt(request.getParameter("qtd"));
                         double preco = Double.parseDouble(request.getParameter("preco"));
 
-                        Cidade cidade = new Cidade(cep, nome, estado);
+                        Produto produto = new Produto(desc, qtd, preco);
 
                         boolean inseriu = CidadeDB.insereCidade(cidade);
 

@@ -13,11 +13,10 @@ public class Produto {
 
     private int proCodigo;
     private String descricao;
-    private float preco;
+    private double preco;
     private int qtdEstoque;
 
-    public Produto(int proCodigo, String descricao, float preco, int qtdEstoque) {
-        this.proCodigo = proCodigo;
+    public Produto(String descricao, int qtdEstoque, double preco) {
         this.descricao = descricao;
         this.preco = preco;
         this.qtdEstoque = qtdEstoque;
