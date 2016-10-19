@@ -77,7 +77,7 @@
                                     out.println("<td>" + cidade.getNome() + "</td>");
                                     out.println("<td>" + cidade.getEstado() + "</td>");
                                     //out.println("<td><a href=\"AlterarApartamento.jsp?numero=" + apartamento.getAptNumero() + "&qtd=" + apartamento.getQtdQuartos() + "&area=" + apartamento.getArea() + "&codPropr=" + apartamento.getPro_codigo() + "&ocupacao=" + apartamento.getTipo_codigo() + "\">Alterar</a> - <a href=\"ExcluirApartamento.jsp?codigo=" + apartamento.getAptNumero() + "\">Excluir</a></td>");
-                                    out.println("<td><a href=\"excluiCidade.jsp?cep="+cidade.getCep()+"\" class=\"btn btn-danger\" role=\"button\">Excluir</a><a href=\"\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
+                                    out.println("<td><a href=\"excluiCidade.jsp?cep="+cidade.getCep()+"\" class=\"btn btn-danger\" role=\"button\">Excluir</a><a href=\"alteraCidade.jsp?cep="+cidade.getCep()+"&nome="+cidade.getNome()+"&estado="+cidade.getEstado()+"\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
                                     out.println("</tr>");
                                 }
 

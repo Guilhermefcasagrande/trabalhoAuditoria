@@ -24,7 +24,7 @@ public class CidadeDB {
     private static String sqlLista = "select * from cidade";
     private static String sqlInsere = "insert into cidade (cep, nome, estado) values (?, ?, ?)";
     private static String sqlExclui = "delete from cidade where cep = ?";
-    //private static String sqlAltera = "update apartamento set qtd_quartos = ?, area = ?, pro_codigo = ?, tipo_codigo =?  where apt_numero = ?";
+    private static String sqlAltera = "update cidade set cep = ?, nome = ?, estado = ? where cep = ?";
 
     public static boolean insereCidade(Cidade cidade) {
         boolean inseriu = false;
@@ -95,6 +95,30 @@ public class CidadeDB {
             System.out.println("Erro de SQL " + erro.getMessage());
         } finally {
             return excluiu;
+        }
+
+    }
+
+    public static boolean alteraCidade(Cidade cidade) {
+        boolean alterou = false;
+
+        try {
+            Connection conexao = ConexaoElep.getConnection();
+            PreparedStatement pstmt = conexao.prepareStatement(sqlAltera);
+            
+            pstmt.setInt(1, cidade.getCep());
+            pstmt.setString(2, cidade.getNome());
+            pstmt.setString(3, cidade.getEstado());
+            
+            int valor = pstmt.executeUpdate();
+            if (valor == 1) {
+                alterou = true;
+            }
+
+        } catch (SQLException erro) {
+            System.out.println("Erro de SQl " + erro.getMessage());
+        } finally {
+            return alterou;
         }
 
     }
