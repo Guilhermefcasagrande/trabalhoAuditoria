@@ -109,6 +109,8 @@ public class CidadeDB {
             pstmt.setInt(1, cidade.getCep());
             pstmt.setString(2, cidade.getNome());
             pstmt.setString(3, cidade.getEstado());
+            pstmt.setInt(4, cidade.getCep());
+            System.out.println(pstmt);
             
             int valor = pstmt.executeUpdate();
             if (valor == 1) {

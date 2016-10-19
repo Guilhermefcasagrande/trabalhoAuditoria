@@ -45,6 +45,7 @@
                 int cep = Integer.parseInt(request.getParameter("cep"));
                 String nome = request.getParameter("nome");
                 String estado = request.getParameter("estado");
+                
 
                 Cidade cidade = new Cidade(cep, nome, estado);
                 boolean alterou = CidadeDB.alteraCidade(cidade);
