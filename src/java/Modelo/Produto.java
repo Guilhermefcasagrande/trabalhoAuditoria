@@ -21,6 +21,9 @@ public class Produto {
         this.preco = preco;
         this.qtdEstoque = qtdEstoque;
     }
+    
+    public Produto(){
+    }
 
     public int getProCodigo() {
         return proCodigo;
@@ -42,7 +45,7 @@ public class Produto {
         return preco;
     }
 
-    public void setPreco(float preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
     }
 

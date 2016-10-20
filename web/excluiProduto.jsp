@@ -1,19 +1,18 @@
 <%-- 
-    Document   : trataProduto
-    Created on : 14/10/2016, 18:42:13
-    Author     : Guilherme
+    Document   : excluiProduto
+    Created on : 20/10/2016, 09:32:23
+    Author     : guilherme
 --%>
 
 <%@page import="Controle.ProdutoDB"%>
 <%@page import="Modelo.Produto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Cadastro de Cidade</title>
+        <title>Eclusão de Cidades</title>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/datepicker3.css" rel="stylesheet">
@@ -23,9 +22,11 @@
         <!--Icons-->
         <script src="js/lumino.glyphs.js"></script>
     </head>
+
     <body>
         <%@include file="menu.html" %>
         <%@include file="header.html" %>
+
         <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
             <div class="row">
                 <ol class="breadcrumb">
@@ -36,47 +37,43 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Incluir Novo Produto</h1>
+                    <h1 class="page-header">Excluir Produto</h1>
                 </div>
-            </div><!--/.row-->	
+            </div><!--/.row-->
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <%
 
-                        String desc = request.getParameter("descricao");
-                        int qtd = Integer.parseInt(request.getParameter("qtd"));
-                        double preco = Double.parseDouble(request.getParameter("preco"));
+            <%
+                int codigo = Integer.parseInt(request.getParameter("codigo"));
+                String desc = "";
+                double preco = 0;
+                int qtd = 0;
 
-                        Produto produto = new Produto(desc, qtd, preco);
+                Produto prod = new Produto();
+                prod.setProCodigo(codigo);
 
-                        boolean inseriu = ProdutoDB.insereProduto(produto);
-
-                        if (inseriu) {
-                            out.println("<div class=\"alert bg-success\" role=\"alert\">");
-                            out.println("<svg class=\"glyph stroked checkmark\">");
-                            out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
-                            out.println("</svg> Produto inserido com sucesso!");
-                            out.println("<a href=\"insereProduto.jsp\" class=\"pull-right\">");
-                            out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                            out.println("</a>");
-                            out.println("</div>");
-                        } else {
-                            out.println("<div class=\"alert bg-danger\" role=\"alert\">");
-                            out.println("<svg class=\"glyph stroked cancel\">");
-                            out.println("<use xlink:href=\"#stroked-cancel\"></use>");
-                            out.println("</svg> Erro no cadastro do produto!");
-                            out.println("<a href=\"insereProduto.jsp\" class=\"pull-right\">");
-                            out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                            out.println("</a>");
-                            out.println("</div>");
-                        }
-                    %>  
-                </div>
-            </div>
+                boolean excluiu = ProdutoDB.excluiProduto(prod);
+                if (excluiu) {
+                    out.println("<div class=\"alert bg-success\" role=\"alert\">");
+                    out.println("<svg class=\"glyph stroked checkmark\">");
+                    out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
+                    out.println("</svg> Produto excluído com sucesso!");
+                    out.println("<a href=\"listaProduto.jsp\" class=\"pull-right\">");
+                    out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                    out.println("</a>");
+                    out.println("</div>");
+                } else {
+                    out.println("<div class=\"alert bg-danger\" role=\"alert\">");
+                    out.println("<svg class=\"glyph stroked cancel\">");
+                    out.println("<use xlink:href=\"#stroked-cancel\"></use>");
+                    out.println("</svg> Erro na exclusão do produto!");
+                    out.println("<a href=\"listaProduto.jsp\" class=\"pull-right\">");
+                    out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                    out.println("</a>");
+                    out.println("</div>");
+                }
+            %>
 
         </div><!--/.main-->
-
 
         <script src="js/jquery-1.11.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -102,7 +99,7 @@
                 if ($(window).width() <= 767)
                     $('#sidebar-collapse').collapse('hide')
             })
-        </script>
+        </script>	
     </body>
-</html>
 
+</html>

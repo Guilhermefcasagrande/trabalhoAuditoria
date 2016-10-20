@@ -1,12 +1,12 @@
 <%-- 
-    Document   : listaCidade
-    Created on : 19/10/2016, 10:19:11
+    Document   : listaProduto
+    Created on : 20/10/2016, 09:08:29
     Author     : guilherme
 --%>
 
-<%@page import="Controle.CidadeDB"%>
+<%@page import="Controle.ProdutoDB"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="Modelo.Cidade"%>
+<%@page import="Modelo.Produto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -47,7 +47,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <%
-                                ArrayList<Cidade> lista = new ArrayList();
+                                ArrayList<Produto> lista = new ArrayList();
 
                                 /*if (request.getParameter("btnConsulta") != null) {
                                     String campo = request.getParameter("campo");
@@ -57,26 +57,28 @@
                                 } else {
                                     lista = ApartamentoDB.getTodos();
                                 }*/
-                                lista = CidadeDB.listaCidade();
+                                lista = ProdutoDB.listaProduto();
 
                                 out.println("<table class=\"table table-bordered\">");
                                 out.println("<thead>");
                                 out.println("<tr>");
-                                out.println("<th>Cep</th>");
-                                out.println("<th>Nome</th>");
-                                out.println("<th>Estado</th>");
+                                out.println("<th>Código</th>");
+                                out.println("<th>Descrição</th>");
+                                out.println("<th>Preço</th>");
+                                out.println("<th>Quantidade em estoque</th>");
                                 out.println("<th>Ações</th>");
                                 out.println("</tr>");
                                 out.println("</thead>");
                                 out.println("<tbody>");
 
                                 for (int i = 0; i < lista.size(); i++) {
-                                    Cidade cidade = lista.get(i);
+                                    Produto prod = lista.get(i);
                                     out.println("<tr>");
-                                    out.println("<td>" + cidade.getCep() + "</td>");
-                                    out.println("<td>" + cidade.getNome() + "</td>");
-                                    out.println("<td>" + cidade.getEstado() + "</td>");
-                                    out.println("<td><a href=\"excluiCidade.jsp?cep=" + cidade.getCep() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a><a href=\"alteraCidade.jsp?cep=" + cidade.getCep() + "&nome=" + cidade.getNome() + "&estado=" + cidade.getEstado() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
+                                    out.println("<td>" + prod.getProCodigo() + "</td>");
+                                    out.println("<td>" + prod.getDescricao() + "</td>");
+                                    out.println("<td>" + prod.getPreco() + "</td>");
+                                    out.println("<td>" + prod.getQtdEstoque() + "</td>");
+                                    out.println("<td><a href=\"excluiProduto.jsp?codigo=" + prod.getProCodigo() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a><a href=\"alteraProduto.jsp?codigo=" + prod.getProCodigo() + "&descricao=" + prod.getDescricao() + "&preco=" + prod.getPreco() + "&qtd=" + prod.getQtdEstoque() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
                                     out.println("</tr>");
                                 }
 

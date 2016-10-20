@@ -1,19 +1,16 @@
 <%-- 
-    Document   : trataProduto
-    Created on : 14/10/2016, 18:42:13
-    Author     : Guilherme
+    Document   : alteraProduto
+    Created on : 20/10/2016, 09:42:07
+    Author     : guilherme
 --%>
 
-<%@page import="Controle.ProdutoDB"%>
-<%@page import="Modelo.Produto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Cadastro de Cidade</title>
+        <title>Cadastro de Produtos</title>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/datepicker3.css" rel="stylesheet">
@@ -23,9 +20,17 @@
         <!--Icons-->
         <script src="js/lumino.glyphs.js"></script>
     </head>
+
     <body>
         <%@include file="menu.html" %>
         <%@include file="header.html" %>
+        <%
+            int codigo = Integer.parseInt(request.getParameter("codigo"));
+            String desc = request.getParameter("descricao");
+            double preco = Double.parseDouble(request.getParameter("preco"));
+            int qtd = Integer.parseInt(request.getParameter("qtd"));
+
+        %>
         <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
             <div class="row">
                 <ol class="breadcrumb">
@@ -36,47 +41,45 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Incluir Novo Produto</h1>
-                </div>
-            </div><!--/.row-->	
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <%
-
-                        String desc = request.getParameter("descricao");
-                        int qtd = Integer.parseInt(request.getParameter("qtd"));
-                        double preco = Double.parseDouble(request.getParameter("preco"));
-
-                        Produto produto = new Produto(desc, qtd, preco);
-
-                        boolean inseriu = ProdutoDB.insereProduto(produto);
-
-                        if (inseriu) {
-                            out.println("<div class=\"alert bg-success\" role=\"alert\">");
-                            out.println("<svg class=\"glyph stroked checkmark\">");
-                            out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
-                            out.println("</svg> Produto inserido com sucesso!");
-                            out.println("<a href=\"insereProduto.jsp\" class=\"pull-right\">");
-                            out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                            out.println("</a>");
-                            out.println("</div>");
-                        } else {
-                            out.println("<div class=\"alert bg-danger\" role=\"alert\">");
-                            out.println("<svg class=\"glyph stroked cancel\">");
-                            out.println("<use xlink:href=\"#stroked-cancel\"></use>");
-                            out.println("</svg> Erro no cadastro do produto!");
-                            out.println("<a href=\"insereProduto.jsp\" class=\"pull-right\">");
-                            out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                            out.println("</a>");
-                            out.println("</div>");
-                        }
-                    %>  
+                    <h1 class="page-header">Alterar Produtos</h1>
                 </div>
             </div>
 
-        </div><!--/.main-->
+            <div class="row">
+                <div class="form-group">
+                    <a class="btn btn-primary" href="listaProduto.jsp">Cancelar</a>
+                </div>
+            </div>
 
+            <div class="row">
+                <form role="form" action="trataAlteraProduto.jsp" method="post">
+                    <div class="form-group">
+                        <label>Código</label>
+                        <input class="form-control" name="codigo" id="codigo" value="<%=codigo%>">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <input class="form-control" name="descricao" id="descricao" value="<%=desc%>">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preço</label>
+                        <input class="form-control" name="preco" id="preco" value="<%=preco%>">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Quantidade em Estoque</label>
+                        <input class="form-control" name="qtd" id="qtd" value="<%=qtd%>">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="btn btn-primary" type="submit" value="Alterar">
+                    </div>
+                </form>
+            </div>
+
+        </div><!--/.main-->
 
         <script src="js/jquery-1.11.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -102,7 +105,7 @@
                 if ($(window).width() <= 767)
                     $('#sidebar-collapse').collapse('hide')
             })
-        </script>
+        </script>	
     </body>
-</html>
 
+</html>
