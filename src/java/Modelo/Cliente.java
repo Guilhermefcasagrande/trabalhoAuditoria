@@ -5,7 +5,7 @@
  */
 package Modelo;
 
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -18,8 +18,8 @@ public class Cliente {
     private String nome;
     private String endereco;
     private String sexo;
-    private Calendar dtNascto;
-    private float saldoDevedor;
+    private String dtNascto;
+    private double saldoDevedor;
     private String ativo;
 
     public int getCliCodigo() {
@@ -62,19 +62,19 @@ public class Cliente {
         this.sexo = sexo;
     }
 
-    public Calendar getDtNascto() {
+    public String getDtNascto() {
         return dtNascto;
     }
 
-    public void setDtNascto(Calendar dtNascto) {
+    public void setDtNascto(String dtNascto) {
         this.dtNascto = dtNascto;
     }
 
-    public float getSaldoDevedor() {
+    public double getSaldoDevedor() {
         return saldoDevedor;
     }
 
-    public void setSaldoDevedor(float saldoDevedor) {
+    public void setSaldoDevedor(double saldoDevedor) {
         this.saldoDevedor = saldoDevedor;
     }
 
