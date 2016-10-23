@@ -1,19 +1,19 @@
 <%-- 
-    Document   : listaProduto
-    Created on : 20/10/2016, 09:08:29
-    Author     : guilherme
+    Document   : listaCliente
+    Created on : 23/10/2016, 20:59:46
+    Author     : Guilherme
 --%>
 
-<%@page import="Controle.ProdutoDB"%>
+<%@page import="Modelo.Cliente"%>
+<%@page import="Controle.ClienteDB"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="Modelo.Produto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Cadastro de Cidades</title>
+        <title>Consulta de Clientes</title>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/datepicker3.css" rel="stylesheet">
@@ -38,7 +38,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Consulta de Cidades</h1>
+                    <h1 class="page-header">Consulta de Clientes</h1>
                 </div>
             </div>
 
@@ -47,29 +47,40 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <%
-                                ArrayList<Produto> lista = new ArrayList();
-                                lista = ProdutoDB.listaProduto();
+                                ArrayList<Cliente> lista = new ArrayList();
+                                lista = ClienteDB.listaCliente();
 
                                 out.println("<table class=\"table table-bordered\">");
                                 out.println("<thead>");
                                 out.println("<tr>");
                                 out.println("<th>Código</th>");
-                                out.println("<th>Descrição</th>");
-                                out.println("<th>Preço</th>");
-                                out.println("<th>Quantidade em estoque</th>");
+                                out.println("<th>Cep</th>");
+                                out.println("<th>Nome</th>");
+                                out.println("<th>Endereço</th>");
+                                out.println("<th>Sexo</th>");
+                                out.println("<th>Nascimento</th>");
+                                out.println("<th>Saldo</th>");
+                                out.println("<th>Ativo</th>");
                                 out.println("<th>Ações</th>");
                                 out.println("</tr>");
                                 out.println("</thead>");
                                 out.println("<tbody>");
 
                                 for (int i = 0; i < lista.size(); i++) {
-                                    Produto prod = lista.get(i);
+                                    Cliente cli = lista.get(i);
                                     out.println("<tr>");
-                                    out.println("<td>" + prod.getProCodigo() + "</td>");
-                                    out.println("<td>" + prod.getDescricao() + "</td>");
-                                    out.println("<td>" + prod.getPreco() + "</td>");
-                                    out.println("<td>" + prod.getQtdEstoque() + "</td>");
-                                    out.println("<td><a href=\"excluiProduto.jsp?codigo=" + prod.getProCodigo() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a><a href=\"alteraProduto.jsp?codigo=" + prod.getProCodigo() + "&descricao=" + prod.getDescricao() + "&preco=" + prod.getPreco() + "&qtd=" + prod.getQtdEstoque() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
+                                    out.println("<td>" + cli.getCliCodigo() + "</td>");
+                                    out.println("<td>" + cli.getCep() + "</td>");
+                                    out.println("<td>" + cli.getNome() + "</td>");
+                                    out.println("<td>" + cli.getEndereco() + "</td>");
+                                    out.println("<td>" + cli.getSexo() + "</td>");
+                                    out.println("<td>" + cli.getDtNascto() + "</td>");
+                                    out.println("<td>" + cli.getSaldoDevedor() + "</td>");
+                                    out.println("<td>" + cli.getAtivo() + "</td>");
+                                    out.println("<td><a href=\"excluiCliente.jsp?codigo=" + cli.getCliCodigo() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a>"
+                                            + "<a href=\"alteraCliente.jsp?codigo=" + cli.getCliCodigo() + "&cep=" + cli.getCep() + "&nome=" + cli.getNome() + "&endereco=" 
+                                            + cli.getEndereco() + "&sexo=" + cli.getSexo() + "&dt_nascto=" + cli.getDtNascto() + "&saldo=" + cli.getSaldoDevedor() + "&ativo=" + cli.getAtivo() + "\" "
+                                            + "class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
                                     out.println("</tr>");
                                 }
 

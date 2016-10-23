@@ -1,16 +1,18 @@
 <%-- 
-    Document   : insereCliente
-    Created on : 21/10/2016, 09:08:02
-    Author     : guilherme
+    Document   : excluiCliente
+    Created on : 23/10/2016, 21:17:06
+    Author     : Guilherme
 --%>
 
+<%@page import="Controle.ClienteDB"%>
+<%@page import="Modelo.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Cadastro de Clientes</title>
+        <title>Eclusão de Clientes</title>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/datepicker3.css" rel="stylesheet">
@@ -35,52 +37,38 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Incluir Novo Cliente</h1>
+                    <h1 class="page-header">Excluir Clientes</h1>
                 </div>
-            </div><!--/.row-->	
+            </div><!--/.row-->
 
-            <div class="row">
-                <form role="form" action="trataCliente.jsp" method="post">
-                    <div class="form-group">
-                        <label>CEP</label>
-                        <input class="form-control" name="cep" id="cep">
-                    </div>
 
-                    <div class="form-group">
-                        <label>Nome</label>
-                        <input class="form-control" name="nome" id="nome">
-                    </div>
+            <%
+                int codigo = Integer.parseInt(request.getParameter("codigo"));
 
-                    <div class="form-group">
-                        <label>Endereço</label>
-                        <input class="form-control" name="endereco" id="estado">
-                    </div>
+                Cliente cli = new Cliente();
+                cli.setCliCodigo(codigo);
 
-                    <div class="form-group">
-                        <label>Sexo</label>
-                        <input class="form-control" name="sexo" id="estado">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Data de Nascimento</label>
-                        <input class="form-control" name="dt_nascto" id="estado">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Saldo Devedor</label>
-                        <input class="form-control" name="saldo" id="estado">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Ativo</label>
-                        <input class="form-control" name="ativo" id="estado">
-                    </div>
-
-                    <div class="form-group">
-                        <input class="btn btn-primary" type="submit" value="Cadastrar">
-                    </div>
-                </form>
-            </div>
+                boolean excluiu = ClienteDB.excluiCliente(cli);
+                if (excluiu) {
+                    out.println("<div class=\"alert bg-success\" role=\"alert\">");
+                    out.println("<svg class=\"glyph stroked checkmark\">");
+                    out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
+                    out.println("</svg> Cliente excluído com sucesso!");
+                    out.println("<a href=\"listaCliente.jsp\" class=\"pull-right\">");
+                    out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                    out.println("</a>");
+                    out.println("</div>");
+                } else {
+                    out.println("<div class=\"alert bg-danger\" role=\"alert\">");
+                    out.println("<svg class=\"glyph stroked cancel\">");
+                    out.println("<use xlink:href=\"#stroked-cancel\"></use>");
+                    out.println("</svg> Erro na exclusão do cliente!");
+                    out.println("<a href=\"listaCliente.jsp\" class=\"pull-right\">");
+                    out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                    out.println("</a>");
+                    out.println("</div>");
+                }
+            %>
 
         </div><!--/.main-->
 
