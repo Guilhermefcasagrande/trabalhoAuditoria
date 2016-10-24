@@ -69,7 +69,7 @@
                     out.println("<svg class=\"glyph stroked checkmark\">");
                     out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
                     out.println("</svg> Cliente alterado com sucesso!");
-                    out.println("<a href=\"listaProduto.jsp\" class=\"pull-right\">");
+                    out.println("<a href=\"listaCliente.jsp\" class=\"pull-right\">");
                     out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
                     out.println("</a>");
                     out.println("</div>");
@@ -78,7 +78,7 @@
                     out.println("<svg class=\"glyph stroked cancel\">");
                     out.println("<use xlink:href=\"#stroked-cancel\"></use>");
                     out.println("</svg> Erro na alteração do cliente!");
-                    out.println("<a href=\"listaProduto.jsp\" class=\"pull-right\">");
+                    out.println("<a href=\"listaCliente.jsp\" class=\"pull-right\">");
                     out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
                     out.println("</a>");
                     out.println("</div>");

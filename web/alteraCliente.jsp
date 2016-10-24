@@ -25,8 +25,8 @@
         <%@include file="menu.html" %>
         <%@include file="header.html" %>
         <%
-            int codigo = Integer.parseInt(request.getParameter("codigo"));
-            int cep = Integer.parseInt(request.getParameter("cep"));
+            String codigo = request.getParameter("codigo");
+            String cep = request.getParameter("cep");
             String nome = request.getParameter("nome");
             String endereco = request.getParameter("endereco");
             String sexo = request.getParameter("sexo");
@@ -63,7 +63,7 @@
 
                     <div class="form-group">
                         <label>CEP</label>
-                        <input class="form-control" name="descricao" id="cep" value="<%=cep%>">
+                        <input class="form-control" name="cep" id="cep" value="<%=cep%>">
                     </div>
 
                     <div class="form-group">
