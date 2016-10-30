@@ -4,6 +4,7 @@
     Author     : guilherme
 --%>
 
+<%@page import="Controle.VerificaAcao"%>
 <%@page import="Controle.CidadeDB"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Modelo.Cidade"%>
@@ -47,16 +48,11 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <%
+                                String acao = "Consulta";
+                                VerificaAcao verifica = new VerificaAcao();
+                                int acCodigo = verifica.buscaAcao(acao);
+                                
                                 ArrayList<Cidade> lista = new ArrayList();
-
-                                /*if (request.getParameter("btnConsulta") != null) {
-                                    String campo = request.getParameter("campo");
-                                    String tipo = request.getParameter("tipo");
-                                    String descricao = request.getParameter("descricao");
-                                    lista = ApartamentoDB.getConsulta(campo, tipo, descricao);
-                                } else {
-                                    lista = ApartamentoDB.getTodos();
-                                }*/
                                 lista = CidadeDB.listaCidade();
 
                                 out.println("<table class=\"table table-bordered\">");
