@@ -15,7 +15,25 @@ public class Log {
 
     private int usrCodigo;
     private int acCodigo;
-    private Calendar dtExecucao;
+    private String dtExecucao;
+    private int cdLog;
+    private String tabela;
+
+    public int getCdLog() {
+        return cdLog;
+    }
+
+    public void setCdLog(int cdLog) {
+        this.cdLog = cdLog;
+    }
+
+    public String getTabela() {
+        return tabela;
+    }
+
+    public void setTabela(String tabela) {
+        this.tabela = tabela;
+    }
 
     public int getUsrCodigo() {
         return usrCodigo;
@@ -33,11 +51,11 @@ public class Log {
         this.acCodigo = acCodigo;
     }
 
-    public Calendar getDtExecucao() {
+    public String getDtExecucao() {
         return dtExecucao;
     }
 
-    public void setDtExecucao(Calendar dtExecucao) {
+    public void setDtExecucao(String dtExecucao) {
         this.dtExecucao = dtExecucao;
     }
     
