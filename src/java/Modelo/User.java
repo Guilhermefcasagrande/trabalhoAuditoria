@@ -17,14 +17,6 @@ public class User {
     private String senha;
     private String email;
 
-    public User(int usrCodigo, String nome, String login, String senha, String email) {
-        this.usrCodigo = usrCodigo;
-        this.nome = nome;
-        this.login = login;
-        this.senha = senha;
-        this.email = email;
-    }
-
     public int getUsrCodigo() {
         return usrCodigo;
     }

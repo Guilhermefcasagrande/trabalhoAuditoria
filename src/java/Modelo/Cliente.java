@@ -5,8 +5,6 @@
  */
 package Modelo;
 
-import java.util.Date;
-
 /**
  *
  * @author Guilherme

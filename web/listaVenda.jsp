@@ -59,7 +59,7 @@
                                 out.println("<th>Venda</th>");
                                 out.println("<th>Data</th>");
                                 out.println("<th>Quantidade</th>");
-                                out.println("<th>Data do Pagamento</th>");
+                                out.println("<th>Pagamento</th>");
                                 out.println("<th>Valor</th>");
                                 out.println("<th>Ações</th>");
                                 out.println("</tr>");
@@ -67,17 +67,17 @@
                                 out.println("<tbody>");
 
                                 for (int i = 0; i < lista.size(); i++) {
-                                    Venda venda = lista.get(i);
+                                    Venda cli = lista.get(i);
                                     out.println("<tr>");
-                                    out.println("<td>" + venda.getCliCodigo() + "</td>");
-                                    out.println("<td>" + venda.getCep() + "</td>");
-                                    out.println("<td>" + venda.getProCodigo() + "</td>");
-                                    out.println("<td>" + venda.getvCodigo() + "</td>");
-                                    out.println("<td>" + venda.getData() + "</td>");
-                                    out.println("<td>" + venda.getQtdVenda() + "</td>");
-                                    out.println("<td>" + venda.getDataPagto() + "</td>");
-                                    out.println("<td>" + venda.getValorPagto() + "</td>");
-                                    //out.println("<td><a href=\"excluiCliente.jsp?codigo=" + cli.getCliCodigo() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a><a href=\"alteraCliente.jsp?codigo=" + cli.getCliCodigo() + "&cep=" + cli.getCep() + "&nome=" + cli.getNome() + "&endereco="+ cli.getEndereco() + "&sexo=" + cli.getSexo() + "&dt_nascto=" + cli.getDtNascto() + "&saldo=" + cli.getSaldoDevedor() + "&ativo=" + cli.getAtivo() + "\"class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
+                                    out.println("<td>" + cli.getCliCodigo() + "</td>");
+                                    out.println("<td>" + cli.getCep() + "</td>");
+                                    out.println("<td>" + cli.getProCodigo() + "</td>");
+                                    out.println("<td>" + cli.getvCodigo() + "</td>");
+                                    out.println("<td>" + cli.getData() + "</td>");
+                                    out.println("<td>" + cli.getQtdVenda() + "</td>");
+                                    out.println("<td>" + cli.getDataPagto() + "</td>");
+                                    out.println("<td>" + cli.getValorPagto() + "</td>");
+                                    //out.println("<td><a href=\"excluiCliente.jsp?codigo=" + cli.getCliCodigo() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a><a href=\"alteraCliente.jsp?codigo=" + cli.getCliCodigo() + "&cep=" + cli.getCep() + "&nome=" + cli.getNome() + "&endereco="+ cli.getEndereco() + "&sexo=" + cli.getSexo() + "&dt_nascto=" + cli.getDtNascto() + "&saldo=" + cli.getSaldoDevedor() + "&ativo=" + cli.getAtivo() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
                                     out.println("</tr>");
                                 }
 

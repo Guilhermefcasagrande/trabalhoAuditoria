@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class VendaDB {
 
     private static String sqlInsere = "insert into venda (cli_codigo,cep,pro_codigo,data,qtd_venda,data_pagto,valor_pagto) values (?,?,?,?,?,?,?)";
-    private static String sqlLista = "select * from venda order by v_codigo";
+    private static String sqlLista = "select * from venda";
     //private static String sqlExclui = "delete from produto where pro_codigo = ?";
     //private static String sqlAltera = "update produto set pro_codigo = ?, descricao = ?, preco = ?, qtd_estoque = ? where pro_codigo = ?";
 
@@ -58,7 +58,7 @@ public class VendaDB {
             Statement stm = conexao.createStatement();
             ResultSet rs = stm.executeQuery(sqlLista);
             while (rs.next()) {
-                int cliente = rs.getInt("cli_codigo ");
+                int cliente = rs.getInt("cli_codigo");
                 int cep = rs.getInt("cep");
                 int produto = rs.getInt("pro_codigo");
                 int venda = rs.getInt("v_codigo");
