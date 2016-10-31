@@ -23,7 +23,7 @@ public class ValidaLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession(); //obtem a sessao do usuario, caso exista
 
         User user = null;
@@ -37,10 +37,20 @@ public class ValidaLogin extends HttpServlet {
             System.out.println(e);
         }
 
-        //se nao encontrou usuario no banco, redireciona para a pagina de erro!
+        /*
+         se nao encontrou usuario no banco, redireciona para a pagina de erro, 
+         e atualiza as tentativasde login.
+         */
         if (user == null) {
-            session.invalidate();
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            boolean alterou = false;
+            UserDB udb = new UserDB();
+            alterou = udb.updateTentativasLoginErro(loginForm);
+            System.out.println("Errrouuu");
+
+            if (alterou = true) {
+                session.invalidate();
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
         } else {
             //se o DB retornar um usuario, coloca na sessao
             session.setAttribute("user", user);

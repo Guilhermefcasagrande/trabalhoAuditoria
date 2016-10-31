@@ -17,37 +17,125 @@ import java.sql.SQLException;
  * @author guilherme
  */
 public class UserDB {
+
     private static String sqlUsuario = "select * from usuario where login = ? and senha = ?";
-    
-    public static User getUsuario(String login, String senha){
+    private static String sqlTentativas = "update usuario set tentativas_login = ? where login = ?";
+
+    public static User getUsuario(String login, String senha) {
         User usuario = null;
-        try{
+        try {
             Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlUsuario);
             pstmt.setString(1, login);
             pstmt.setString(2, senha);
             ResultSet rs = pstmt.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int codigo = rs.getInt("usr_codigo");
                 String nome = rs.getString("nome");
                 String log = rs.getString("login");
                 String pass = rs.getString("senha");
                 String email = rs.getString("email");
-                
+
                 usuario = new User();
-                
+
                 usuario.setUsrCodigo(codigo);
                 usuario.setNome(nome);
                 usuario.setLogin(log);
                 usuario.setSenha(pass);
                 usuario.setEmail(email);
-                
+
             }
-        }catch(SQLException erro){
+        } catch (SQLException erro) {
             System.out.println("Erro SQL: " + erro.getMessage());
-        }finally{
+        } finally {
             return usuario;
         }
     }
-    
+
+    /*
+     método que atualiza a quantidade de tentativas de login para o usuario
+     que tiver o login igual ao que foi passado no parametro, dependendo da 
+     quantidade que retornar do método 'retornaQtdLogin'.
+     */
+    public static boolean updateTentativasLoginErro(String login) {
+        boolean alterou = false;
+        int qtd = retornaQtdLogin(login);
+
+        if (qtd < 2) {
+            int aux = qtd;
+            try {
+                Connection conexao = ConexaoElep.getConnection();
+                PreparedStatement pstmt = conexao.prepareStatement(sqlTentativas);
+                pstmt.setInt(1, aux + 1);
+
+                int valor = pstmt.executeUpdate();
+                if (valor == 1) {
+                    alterou = true;
+                }
+                conexao.close();
+            } catch (SQLException erro) {
+                System.out.println("Erro de sql: " + erro);
+            }
+
+        } else if (qtd == 2) {
+            int aux = qtd;
+            try {
+                Connection conexao = ConexaoElep.getConnection();
+                PreparedStatement pstmt = conexao.prepareStatement(sqlTentativas);
+                pstmt.setInt(1, aux + 1);
+
+                pstmt.executeUpdate();
+                conexao.close();
+
+            } catch (SQLException erro) {
+                System.out.println("Erro de sql: " + erro);
+            }
+        }
+        return alterou;
+    }
+
+    /*
+     método que retorna a quantidade de tentativas de login do usuário que 
+     tiver o login igual ao que foi passado no parametro, na coluna 'tentativas_login' 
+     da tabela 'usuario'
+     */
+    public static int retornaQtdLogin(String login) {
+        String sqlBuscaQtd = "select tentativas_login from usuario where login = ?";
+        int qtd = 0;
+        try {
+            Connection conexao = ConexaoElep.getConnection();
+            PreparedStatement pstmt = conexao.prepareStatement(sqlBuscaQtd);
+            pstmt.setString(1, login);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                qtd = rs.getInt("tentativas_login");
+            }
+            conexao.close();
+        } catch (SQLException erro) {
+            System.out.println("Erro de sql: " + erro);
+        } finally {
+            return qtd;
+        }
+
+    }
+
+    public static boolean updateTentativasLogin() {
+        boolean alterou = false;
+        try {
+            Connection conexao = ConexaoElep.getConnection();
+            PreparedStatement pstmt = conexao.prepareStatement(sqlTentativas);
+            pstmt.setInt(1, 0);
+
+            int valor = pstmt.executeUpdate();
+            if (valor == 1) {
+                alterou = true;
+            }
+            conexao.close();
+        } catch (SQLException erro) {
+            System.out.println("Erro de sql: " + erro);
+        } finally {
+            return alterou;
+        }
+    }
+
 }

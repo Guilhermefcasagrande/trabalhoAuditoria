@@ -16,6 +16,15 @@ public class User {
     private String login;
     private String senha;
     private String email;
+    private int tentativasLogin;
+
+    public int getTentativasLogin() {
+        return tentativasLogin;
+    }
+
+    public void setTentativasLogin(int tentativasLogin) {
+        this.tentativasLogin = tentativasLogin;
+    }
 
     public int getUsrCodigo() {
         return usrCodigo;
