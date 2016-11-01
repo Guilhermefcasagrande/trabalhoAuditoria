@@ -42,17 +42,23 @@ public class ValidaLogin extends HttpServlet {
          e atualiza as tentativasde login.
          */
         if (user == null) {
-            boolean alterou = false;
             UserDB udb = new UserDB();
-            alterou = udb.updateTentativasLoginErro(loginForm);
-            System.out.println("Errrouuu");
+            boolean alterou = udb.updateTentativasLoginErro(loginForm);
+            System.out.println("Errrouuu " + alterou);
 
-            if (alterou = true) {
+            if (alterou == true) {
+                session.invalidate();
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            } else {
+                System.out.println("Aqui será enviado o email");
                 session.invalidate();
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         } else {
             //se o DB retornar um usuario, coloca na sessao
+            UserDB udb = new UserDB();
+            boolean alterou = udb.updateTentativasLogin(loginForm);
+
             session.setAttribute("user", user);
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }

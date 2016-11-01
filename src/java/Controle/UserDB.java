@@ -60,6 +60,7 @@ public class UserDB {
     public static boolean updateTentativasLoginErro(String login) {
         boolean alterou = false;
         int qtd = retornaQtdLogin(login);
+        System.out.println(qtd);
 
         if (qtd < 2) {
             int aux = qtd;
@@ -67,6 +68,7 @@ public class UserDB {
                 Connection conexao = ConexaoElep.getConnection();
                 PreparedStatement pstmt = conexao.prepareStatement(sqlTentativas);
                 pstmt.setInt(1, aux + 1);
+                pstmt.setString(2, login);
 
                 int valor = pstmt.executeUpdate();
                 if (valor == 1) {
@@ -77,12 +79,13 @@ public class UserDB {
                 System.out.println("Erro de sql: " + erro);
             }
 
-        } else if (qtd == 2) {
+        } else if (qtd >= 2) {
             int aux = qtd;
             try {
                 Connection conexao = ConexaoElep.getConnection();
                 PreparedStatement pstmt = conexao.prepareStatement(sqlTentativas);
                 pstmt.setInt(1, aux + 1);
+                pstmt.setString(2, login);
 
                 pstmt.executeUpdate();
                 conexao.close();
@@ -119,12 +122,13 @@ public class UserDB {
 
     }
 
-    public static boolean updateTentativasLogin() {
+    public static boolean updateTentativasLogin(String login) {
         boolean alterou = false;
         try {
             Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlTentativas);
             pstmt.setInt(1, 0);
+            pstmt.setString(2, login);
 
             int valor = pstmt.executeUpdate();
             if (valor == 1) {
