@@ -20,6 +20,7 @@ public class UserDB {
 
     private static String sqlUsuario = "select * from usuario where login = ? and senha = ?";
     private static String sqlTentativas = "update usuario set tentativas_login = ? where login = ?";
+    private static String sqlUpdateSituacao = "update usuario set tentativas_login = ?, st_ativo = ? where login = ?";
 
     public static User getUsuario(String login, String senha) {
         User usuario = null;
@@ -35,6 +36,7 @@ public class UserDB {
                 String log = rs.getString("login");
                 String pass = rs.getString("senha");
                 String email = rs.getString("email");
+                String ativo = rs.getString("st_ativo");
 
                 usuario = new User();
 
@@ -43,8 +45,10 @@ public class UserDB {
                 usuario.setLogin(log);
                 usuario.setSenha(pass);
                 usuario.setEmail(email);
+                usuario.setStAtivo(ativo);
 
             }
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro SQL: " + erro.getMessage());
         } finally {
@@ -74,21 +78,22 @@ public class UserDB {
                 if (valor == 1) {
                     alterou = true;
                 }
-                conexao.close();
+                ConexaoElep.fechaConexao(conexao);
             } catch (SQLException erro) {
-                System.out.println("Erro de sql: " + erro);
+                System.out.println("Erro de sql aqui: " + erro);
             }
 
         } else if (qtd >= 2) {
             int aux = qtd;
             try {
                 Connection conexao = ConexaoElep.getConnection();
-                PreparedStatement pstmt = conexao.prepareStatement(sqlTentativas);
+                PreparedStatement pstmt = conexao.prepareStatement(sqlUpdateSituacao);
                 pstmt.setInt(1, aux + 1);
-                pstmt.setString(2, login);
+                pstmt.setString(2, "N");
+                pstmt.setString(3, login);
 
                 pstmt.executeUpdate();
-                conexao.close();
+                ConexaoElep.fechaConexao(conexao);
 
             } catch (SQLException erro) {
                 System.out.println("Erro de sql: " + erro);
@@ -113,7 +118,7 @@ public class UserDB {
             while (rs.next()) {
                 qtd = rs.getInt("tentativas_login");
             }
-            conexao.close();
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de sql: " + erro);
         } finally {
@@ -126,15 +131,16 @@ public class UserDB {
         boolean alterou = false;
         try {
             Connection conexao = ConexaoElep.getConnection();
-            PreparedStatement pstmt = conexao.prepareStatement(sqlTentativas);
+            PreparedStatement pstmt = conexao.prepareStatement(sqlUpdateSituacao);
             pstmt.setInt(1, 0);
-            pstmt.setString(2, login);
+            pstmt.setString(2, "S");
+            pstmt.setString(3, login);
 
             int valor = pstmt.executeUpdate();
             if (valor == 1) {
                 alterou = true;
             }
-            conexao.close();
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de sql: " + erro);
         } finally {

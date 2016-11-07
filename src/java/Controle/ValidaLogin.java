@@ -54,13 +54,18 @@ public class ValidaLogin extends HttpServlet {
                 session.invalidate();
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
-        } else {
-            //se o DB retornar um usuario, coloca na sessao
-            UserDB udb = new UserDB();
-            boolean alterou = udb.updateTentativasLogin(loginForm);
+        } else {//se o DB retornar um usuario, coloca na sessao
+            if (user.getStAtivo() == "N") {
+                session.invalidate();
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                System.out.println("Usuario desativado");
+            } else {
+                UserDB udb = new UserDB();
+                boolean alterou = udb.updateTentativasLogin(loginForm);
 
-            session.setAttribute("user", user);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+                session.setAttribute("user", user);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
         }
     }
 }

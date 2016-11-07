@@ -38,4 +38,16 @@ public class ConexaoElep {
             return conexao;
         }
     }
+
+    public static void fechaConexao(Connection conexao) {
+        if (conexao != null) {
+            try {
+                conexao.close();
+                System.out.println("Conexão Fechada");
+            } catch (SQLException erro) {
+                System.out.println("Erro ao fechar Conexao");
+            }
+        }
+
+    }
 }

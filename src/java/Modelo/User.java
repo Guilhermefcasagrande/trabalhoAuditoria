@@ -17,6 +17,15 @@ public class User {
     private String senha;
     private String email;
     private int tentativasLogin;
+    private String stAtivo;
+
+    public String getStAtivo() {
+        return stAtivo;
+    }
+
+    public void setStAtivo(String stAtivo) {
+        this.stAtivo = stAtivo;
+    }
 
     public int getTentativasLogin() {
         return tentativasLogin;
