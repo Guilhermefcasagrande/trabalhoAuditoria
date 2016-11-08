@@ -28,7 +28,7 @@ public class ClienteDB {
 
     public static boolean insereCliente(Cliente cliente) throws ParseException {
         boolean inseriu = false;
-        
+
         try {
             Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlInsere);
@@ -40,7 +40,7 @@ public class ClienteDB {
             pstmt.setDouble(6, cliente.getSaldoDevedor());
             pstmt.setString(7, cliente.getAtivo());
             pstmt.execute();
-            pstmt.close();
+            ConexaoElep.fechaConexao(conexao);
 
             inseriu = true;
 
@@ -50,7 +50,7 @@ public class ClienteDB {
             return inseriu;
         }
     }
-    
+
     public static ArrayList listaCliente() {
         ArrayList lista = new ArrayList();
 
@@ -69,7 +69,7 @@ public class ClienteDB {
                 String ativo = rs.getString("ativo");
 
                 Cliente cliente = new Cliente();
-                
+
                 cliente.setCliCodigo(codigo);
                 cliente.setCep(cep);
                 cliente.setNome(nome);
@@ -78,10 +78,10 @@ public class ClienteDB {
                 cliente.setDtNascto(dt_nascto);
                 cliente.setSaldoDevedor(saldo);
                 cliente.setAtivo(ativo);
-                
+
                 lista.add(cliente);
             }
-
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL: " + erro.getMessage());
         } finally {
@@ -101,7 +101,7 @@ public class ClienteDB {
             if (valor == 1) {
                 excluiu = true;
             }
-
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL " + erro.getMessage());
         } finally {
@@ -131,7 +131,7 @@ public class ClienteDB {
             if (valor == 1) {
                 alterou = true;
             }
-
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQl " + erro.getMessage());
         } finally {

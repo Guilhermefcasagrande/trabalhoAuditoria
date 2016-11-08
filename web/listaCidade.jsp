@@ -4,6 +4,9 @@
     Author     : guilherme
 --%>
 
+<%@page import="Controle.GravaLog"%>
+<%@page import="Modelo.Log"%>
+<%@page import="Modelo.User"%>
 <%@page import="Controle.VerificaAcao"%>
 <%@page import="Controle.CidadeDB"%>
 <%@page import="java.util.ArrayList"%>
@@ -48,9 +51,19 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <%
-                                String acao = "Consulta";
+                                String acao = "Consultar";
                                 VerificaAcao verifica = new VerificaAcao();
                                 int acCodigo = verifica.buscaAcao(acao);
+                                
+                                User user = (User) session.getAttribute("user");
+                                
+                                Log log = new Log();
+                                //log.setAcCodigo(acCodigo);
+                                //log.setUsrCodigo(user.getUsrCodigo());
+                                //log.setTabela("Cidade");
+                                
+                                //GravaLog.log(log);
+                                
                                 
                                 ArrayList<Cidade> lista = new ArrayList();
                                 lista = CidadeDB.listaCidade();

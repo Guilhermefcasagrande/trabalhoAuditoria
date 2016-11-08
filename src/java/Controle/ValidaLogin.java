@@ -55,7 +55,7 @@ public class ValidaLogin extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         } else {//se o DB retornar um usuario, coloca na sessao
-            if (user.getStAtivo() == "N") {
+            if (user.getStAtivo().equals("N")) {
                 session.invalidate();
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 System.out.println("Usuario desativado");

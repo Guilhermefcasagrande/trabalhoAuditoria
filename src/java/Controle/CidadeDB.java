@@ -37,7 +37,7 @@ public class CidadeDB {
             pstmt.setString(2, cidade.getNome());
             pstmt.setString(3, cidade.getEstado());
             pstmt.execute();
-            pstmt.close();
+            ConexaoElep.fechaConexao(conexao);
 
             /*int valor = pstmt.executeUpdate();
              if (valor == 1) {
@@ -70,7 +70,7 @@ public class CidadeDB {
 
                 lista.add(cidade);
             }
-
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL " + erro.getMessage());
         } finally {
@@ -90,7 +90,7 @@ public class CidadeDB {
             if (valor == 1) {
                 excluiu = true;
             }
-
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL " + erro.getMessage());
         } finally {
@@ -105,18 +105,17 @@ public class CidadeDB {
         try {
             Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlAltera);
-            
+
             pstmt.setInt(1, cidade.getCep());
             pstmt.setString(2, cidade.getNome());
             pstmt.setString(3, cidade.getEstado());
             pstmt.setInt(4, cidade.getCep());
-            System.out.println(pstmt);
-            
+
             int valor = pstmt.executeUpdate();
             if (valor == 1) {
                 alterou = true;
             }
-
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQl " + erro.getMessage());
         } finally {

@@ -22,11 +22,12 @@ public class GravaLog {
         boolean inseriu = false;
         
         try {
+
             Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlGravaLog);
             pstmt.setInt(1, log.getUsrCodigo());
             pstmt.setInt(2, log.getAcCodigo());
-            pstmt.setString(3, log.getDtExecucao());
+            pstmt.setString(3, "current_date");
             pstmt.setString(4, log.getTabela());
             
             pstmt.execute();

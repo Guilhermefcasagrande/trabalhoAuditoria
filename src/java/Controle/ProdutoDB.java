@@ -36,7 +36,7 @@ public class ProdutoDB {
             pstmt.setDouble(2, produto.getPreco());
             pstmt.setInt(3, produto.getQtdEstoque());
             pstmt.execute();
-            pstmt.close();
+            ConexaoElep.fechaConexao(conexao);
 
             inseriu = true;
 
@@ -69,7 +69,7 @@ public class ProdutoDB {
 
                 lista.add(produto);
             }
-
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL: " + erro.getMessage());
         } finally {
@@ -89,7 +89,7 @@ public class ProdutoDB {
             if (valor == 1) {
                 excluiu = true;
             }
-
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL " + erro.getMessage());
         } finally {
@@ -115,7 +115,7 @@ public class ProdutoDB {
             if (valor == 1) {
                 alterou = true;
             }
-
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQl " + erro.getMessage());
         } finally {
