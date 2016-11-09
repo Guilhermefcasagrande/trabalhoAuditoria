@@ -16,7 +16,7 @@ import java.sql.SQLException;
  * @author Guilherme
  */
 public class GravaLog {
-    private static String sqlGravaLog = "insert into log (usr_codigo,ac_codigo,dt_execucao,tabela) values (?,?,?,?)";
+    private static String sqlGravaLog = "insert into log (usr_codigo,ac_codigo,dt_execucao,tabela) values (?,?,current_timestamp,?)";
     
     public static boolean log(Log log){
         boolean inseriu = false;
@@ -27,8 +27,9 @@ public class GravaLog {
             PreparedStatement pstmt = conexao.prepareStatement(sqlGravaLog);
             pstmt.setInt(1, log.getUsrCodigo());
             pstmt.setInt(2, log.getAcCodigo());
-            pstmt.setString(3, "current_date");
-            pstmt.setString(4, log.getTabela());
+            pstmt.setString(3, log.getTabela());
+            
+            System.out.println(pstmt);
             
             pstmt.execute();
             pstmt.close();

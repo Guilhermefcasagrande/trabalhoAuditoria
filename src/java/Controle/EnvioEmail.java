@@ -21,13 +21,13 @@ import javax.mail.internet.MimeMessage;
  */
 public class EnvioEmail {
 
-    public void enviaEmail() {
+    public static void enviaEmail(String login) {
         
-        //Properties props = new Properties();
+        Properties props = new Properties();
         /**
          * Parâmetros de conexão com servidor Gmail
          */
-        /*
+        
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -44,8 +44,8 @@ public class EnvioEmail {
         /**
          * Ativa Debug para sessão
          */
-        //session.setDebug(true);
-/*
+        session.setDebug(true);
+
         try {
 
             Message message = new MimeMessage(session);
@@ -56,18 +56,18 @@ public class EnvioEmail {
 
             message.setRecipients(Message.RecipientType.TO, toUser);
             //Assunto
-            message.setSubject("Enviando email com JavaMail");
+            message.setSubject("Usuário tentando Logar");
             //Corpo
-            message.setText("Teste de envio de email para trablho do Paulinho. Se receber, responde essa porra. By: Guilherme F. C.");
+            message.setText("O usuário tentou fazer login mais de 3 vezes sem sucesso e foi desativado.");
             /**
              * Método para enviar a mensagem criada
              */
-            //Transport.send(message);
+            Transport.send(message);
 
-            //System.out.println("Feito!!!");
+            System.out.println("Feito!!!");
 
-        //} catch (MessagingException e) {
-           // throw new RuntimeException(e);
-        //}
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

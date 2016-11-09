@@ -57,12 +57,13 @@
                                 
                                 User user = (User) session.getAttribute("user");
                                 
-                                Log log = new Log();
-                                //log.setAcCodigo(acCodigo);
-                                //log.setUsrCodigo(user.getUsrCodigo());
-                                //log.setTabela("Cidade");
                                 
-                                //GravaLog.log(log);
+                                Log log = new Log();
+                                log.setAcCodigo(acCodigo);
+                                log.setUsrCodigo(user.getUsrCodigo());
+                                log.setTabela("Cidade");
+                                
+                                GravaLog.log(log);
                                 
                                 
                                 ArrayList<Cidade> lista = new ArrayList();

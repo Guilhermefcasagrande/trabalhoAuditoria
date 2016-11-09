@@ -51,6 +51,7 @@ public class ValidaLogin extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
                 System.out.println("Aqui será enviado o email");
+                //EnvioEmail.enviaEmail(loginForm);
                 session.invalidate();
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
