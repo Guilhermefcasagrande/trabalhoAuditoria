@@ -4,6 +4,10 @@
     Author     : Guilherme
 --%>
 
+<%@page import="Controle.GravaLog"%>
+<%@page import="Controle.VerificaAcao"%>
+<%@page import="Modelo.Log"%>
+<%@page import="Modelo.User"%>
 <%@page import="Controle.ClienteDB"%>
 <%@page import="Modelo.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -43,31 +47,50 @@
 
 
             <%
-                int codigo = Integer.parseInt(request.getParameter("codigo"));
+                User user = (User) session.getAttribute("user");
 
-                Cliente cli = new Cliente();
-                cli.setCliCodigo(codigo);
-
-                boolean excluiu = ClienteDB.excluiCliente(cli);
-                if (excluiu) {
-                    out.println("<div class=\"alert bg-success\" role=\"alert\">");
-                    out.println("<svg class=\"glyph stroked checkmark\">");
-                    out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
-                    out.println("</svg> Cliente excluído com sucesso!");
-                    out.println("<a href=\"listaCliente.jsp\" class=\"pull-right\">");
-                    out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                    out.println("</a>");
-                    out.println("</div>");
+                if (user == null) {
+                    session.invalidate();
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                 } else {
-                    out.println("<div class=\"alert bg-danger\" role=\"alert\">");
-                    out.println("<svg class=\"glyph stroked cancel\">");
-                    out.println("<use xlink:href=\"#stroked-cancel\"></use>");
-                    out.println("</svg> Erro na exclusão do cliente!");
-                    out.println("<a href=\"listaCliente.jsp\" class=\"pull-right\">");
-                    out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                    out.println("</a>");
-                    out.println("</div>");
+                    int codigo = Integer.parseInt(request.getParameter("codigo"));
+
+                    Cliente cli = new Cliente();
+                    cli.setCliCodigo(codigo);
+
+                    boolean excluiu = ClienteDB.excluiCliente(cli);
+                    if (excluiu) {
+                        out.println("<div class=\"alert bg-success\" role=\"alert\">");
+                        out.println("<svg class=\"glyph stroked checkmark\">");
+                        out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
+                        out.println("</svg> Cliente excluído com sucesso!");
+                        out.println("<a href=\"listaCliente.jsp\" class=\"pull-right\">");
+                        out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                        out.println("</a>");
+                        out.println("</div>");
+                        
+                        String acao = "Excluir";
+                        VerificaAcao verifica = new VerificaAcao();
+                        int acCodigo = verifica.buscaAcao(acao);
+
+                        Log log = new Log();
+                        log.setAcCodigo(acCodigo);
+                        log.setUsrCodigo(user.getUsrCodigo());
+                        log.setTabela("Cliente");
+                        
+                        GravaLog.log(log);
+                    } else {
+                        out.println("<div class=\"alert bg-danger\" role=\"alert\">");
+                        out.println("<svg class=\"glyph stroked cancel\">");
+                        out.println("<use xlink:href=\"#stroked-cancel\"></use>");
+                        out.println("</svg> Erro na exclusão do cliente!");
+                        out.println("<a href=\"listaCliente.jsp\" class=\"pull-right\">");
+                        out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                        out.println("</a>");
+                        out.println("</div>");
+                    }
                 }
+
             %>
 
         </div><!--/.main-->

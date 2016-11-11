@@ -4,6 +4,7 @@
     Author     : guilherme
 --%>
 
+<%@page import="Modelo.User"%>
 <%@page import="Controle.CidadeDB"%>
 <%@page import="Modelo.Cidade"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -42,33 +43,41 @@
             </div><!--/.row-->	
 
             <%
-                int cep = Integer.parseInt(request.getParameter("cep"));
-                String nome = request.getParameter("nome");
-                String estado = request.getParameter("estado");
-                
+                User user = (User) session.getAttribute("user");
 
-                Cidade cidade = new Cidade(cep, nome, estado);
-                boolean alterou = CidadeDB.alteraCidade(cidade);
-                
-                if (alterou) {
-                    out.println("<div class=\"alert bg-success\" role=\"alert\">");
-                    out.println("<svg class=\"glyph stroked checkmark\">");
-                    out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
-                    out.println("</svg> Cidade alterada com sucesso!");
-                    out.println("<a href=\"listaCidade.jsp\" class=\"pull-right\">");
-                    out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                    out.println("</a>");
-                    out.println("</div>");
+                if (user == null) {
+                    session.invalidate();
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                 } else {
-                    out.println("<div class=\"alert bg-danger\" role=\"alert\">");
-                    out.println("<svg class=\"glyph stroked cancel\">");
-                    out.println("<use xlink:href=\"#stroked-cancel\"></use>");
-                    out.println("</svg> Erro na alteração da cidade");
-                    out.println("<a href=\"listaCidade.jsp\" class=\"pull-right\">");
-                    out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                    out.println("</a>");
-                    out.println("</div>");
+                    
+                    int cep = Integer.parseInt(request.getParameter("cep"));
+                    String nome = request.getParameter("nome");
+                    String estado = request.getParameter("estado");
+
+                    Cidade cidade = new Cidade(cep, nome, estado);
+                    boolean alterou = CidadeDB.alteraCidade(cidade);
+
+                    if (alterou) {
+                        out.println("<div class=\"alert bg-success\" role=\"alert\">");
+                        out.println("<svg class=\"glyph stroked checkmark\">");
+                        out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
+                        out.println("</svg> Cidade alterada com sucesso!");
+                        out.println("<a href=\"listaCidade.jsp\" class=\"pull-right\">");
+                        out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                        out.println("</a>");
+                        out.println("</div>");
+                    } else {
+                        out.println("<div class=\"alert bg-danger\" role=\"alert\">");
+                        out.println("<svg class=\"glyph stroked cancel\">");
+                        out.println("<use xlink:href=\"#stroked-cancel\"></use>");
+                        out.println("</svg> Erro na alteração da cidade");
+                        out.println("<a href=\"listaCidade.jsp\" class=\"pull-right\">");
+                        out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                        out.println("</a>");
+                        out.println("</div>");
+                    }
                 }
+
             %>
 
         </div><!--/.main-->

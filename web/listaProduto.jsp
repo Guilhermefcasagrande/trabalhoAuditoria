@@ -4,6 +4,10 @@
     Author     : guilherme
 --%>
 
+<%@page import="Controle.GravaLog"%>
+<%@page import="Modelo.Log"%>
+<%@page import="Controle.VerificaAcao"%>
+<%@page import="Modelo.User"%>
 <%@page import="Controle.ProdutoDB"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Modelo.Produto"%>
@@ -47,34 +51,54 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <%
-                                ArrayList<Produto> lista = new ArrayList();
-                                lista = ProdutoDB.listaProduto();
+                                User user = (User) session.getAttribute("user");
 
-                                out.println("<table class=\"table table-bordered\">");
-                                out.println("<thead>");
-                                out.println("<tr>");
-                                out.println("<th>Código</th>");
-                                out.println("<th>Descrição</th>");
-                                out.println("<th>Preço</th>");
-                                out.println("<th>Quantidade em estoque</th>");
-                                out.println("<th>Ações</th>");
-                                out.println("</tr>");
-                                out.println("</thead>");
-                                out.println("<tbody>");
+                                if (user == null) {
+                                    session.invalidate();
+                                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                                } else {
 
-                                for (int i = 0; i < lista.size(); i++) {
-                                    Produto prod = lista.get(i);
+                                    String acao = "Consultar";
+                                    VerificaAcao verifica = new VerificaAcao();
+                                    int acCodigo = verifica.buscaAcao(acao);
+
+                                    Log log = new Log();
+                                    log.setAcCodigo(acCodigo);
+                                    log.setUsrCodigo(user.getUsrCodigo());
+                                    log.setTabela("Produto");
+                                    
+                                    GravaLog.log(log);
+                                    
+                                    ArrayList<Produto> lista = new ArrayList();
+                                    lista = ProdutoDB.listaProduto();
+
+                                    out.println("<table class=\"table table-bordered\">");
+                                    out.println("<thead>");
                                     out.println("<tr>");
-                                    out.println("<td>" + prod.getProCodigo() + "</td>");
-                                    out.println("<td>" + prod.getDescricao() + "</td>");
-                                    out.println("<td>" + prod.getPreco() + "</td>");
-                                    out.println("<td>" + prod.getQtdEstoque() + "</td>");
-                                    out.println("<td><a href=\"excluiProduto.jsp?codigo=" + prod.getProCodigo() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a><a href=\"alteraProduto.jsp?codigo=" + prod.getProCodigo() + "&descricao=" + prod.getDescricao() + "&preco=" + prod.getPreco() + "&qtd=" + prod.getQtdEstoque() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
+                                    out.println("<th>Código</th>");
+                                    out.println("<th>Descrição</th>");
+                                    out.println("<th>Preço</th>");
+                                    out.println("<th>Quantidade em estoque</th>");
+                                    out.println("<th>Ações</th>");
                                     out.println("</tr>");
+                                    out.println("</thead>");
+                                    out.println("<tbody>");
+
+                                    for (int i = 0; i < lista.size(); i++) {
+                                        Produto prod = lista.get(i);
+                                        out.println("<tr>");
+                                        out.println("<td>" + prod.getProCodigo() + "</td>");
+                                        out.println("<td>" + prod.getDescricao() + "</td>");
+                                        out.println("<td>" + prod.getPreco() + "</td>");
+                                        out.println("<td>" + prod.getQtdEstoque() + "</td>");
+                                        out.println("<td><a href=\"excluiProduto.jsp?codigo=" + prod.getProCodigo() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a><a href=\"alteraProduto.jsp?codigo=" + prod.getProCodigo() + "&descricao=" + prod.getDescricao() + "&preco=" + prod.getPreco() + "&qtd=" + prod.getQtdEstoque() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
+                                        out.println("</tr>");
+                                    }
+
+                                    out.println("</tbody>");
+                                    out.println("</table>");
                                 }
 
-                                out.println("</tbody>");
-                                out.println("</table>");
                             %> 
                         </div>
                     </div>

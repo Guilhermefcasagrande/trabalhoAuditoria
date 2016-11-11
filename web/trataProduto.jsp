@@ -4,6 +4,7 @@
     Author     : Guilherme
 --%>
 
+<%@page import="Modelo.User"%>
 <%@page import="Controle.ProdutoDB"%>
 <%@page import="Modelo.Produto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -44,33 +45,42 @@
                 <div class="col-lg-12">
                     <%
 
-                        String desc = request.getParameter("descricao");
-                        int qtd = Integer.parseInt(request.getParameter("qtd"));
-                        double preco = Double.parseDouble(request.getParameter("preco"));
+                        User user = (User) session.getAttribute("user");
 
-                        Produto produto = new Produto(desc, qtd, preco);
-
-                        boolean inseriu = ProdutoDB.insereProduto(produto);
-
-                        if (inseriu) {
-                            out.println("<div class=\"alert bg-success\" role=\"alert\">");
-                            out.println("<svg class=\"glyph stroked checkmark\">");
-                            out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
-                            out.println("</svg> Produto inserido com sucesso!");
-                            out.println("<a href=\"insereProduto.jsp\" class=\"pull-right\">");
-                            out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                            out.println("</a>");
-                            out.println("</div>");
+                        if (user == null) {
+                            session.invalidate();
+                            request.getRequestDispatcher("login.jsp").forward(request, response);
                         } else {
-                            out.println("<div class=\"alert bg-danger\" role=\"alert\">");
-                            out.println("<svg class=\"glyph stroked cancel\">");
-                            out.println("<use xlink:href=\"#stroked-cancel\"></use>");
-                            out.println("</svg> Erro no cadastro do produto!");
-                            out.println("<a href=\"insereProduto.jsp\" class=\"pull-right\">");
-                            out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                            out.println("</a>");
-                            out.println("</div>");
+
+                            String desc = request.getParameter("descricao");
+                            int qtd = Integer.parseInt(request.getParameter("qtd"));
+                            double preco = Double.parseDouble(request.getParameter("preco"));
+
+                            Produto produto = new Produto(desc, qtd, preco);
+
+                            boolean inseriu = ProdutoDB.insereProduto(produto);
+
+                            if (inseriu) {
+                                out.println("<div class=\"alert bg-success\" role=\"alert\">");
+                                out.println("<svg class=\"glyph stroked checkmark\">");
+                                out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
+                                out.println("</svg> Produto inserido com sucesso!");
+                                out.println("<a href=\"insereProduto.jsp\" class=\"pull-right\">");
+                                out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                                out.println("</a>");
+                                out.println("</div>");
+                            } else {
+                                out.println("<div class=\"alert bg-danger\" role=\"alert\">");
+                                out.println("<svg class=\"glyph stroked cancel\">");
+                                out.println("<use xlink:href=\"#stroked-cancel\"></use>");
+                                out.println("</svg> Erro no cadastro do produto!");
+                                out.println("<a href=\"insereProduto.jsp\" class=\"pull-right\">");
+                                out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                                out.println("</a>");
+                                out.println("</div>");
+                            }
                         }
+
                     %>  
                 </div>
             </div>

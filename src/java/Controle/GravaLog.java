@@ -29,12 +29,11 @@ public class GravaLog {
             pstmt.setInt(2, log.getAcCodigo());
             pstmt.setString(3, log.getTabela());
             
-            System.out.println(pstmt);
-            
             pstmt.execute();
             pstmt.close();
 
             inseriu = true;
+            System.out.println("Log Gravado");
 
         } catch (SQLException erro) {
             System.out.println("Erro de SQL " + erro.getMessage());

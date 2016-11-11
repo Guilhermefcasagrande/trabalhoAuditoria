@@ -4,6 +4,7 @@
     Author     : guilherme
 --%>
 
+<%@page import="Modelo.User"%>
 <%@page import="Controle.ProdutoDB"%>
 <%@page import="Modelo.Produto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -42,39 +43,48 @@
             </div><!--/.row-->	
 
             <%
-                int codigo = Integer.parseInt(request.getParameter("codigo"));
-                String descricao = request.getParameter("descricao");
-                double preco = Double.parseDouble(request.getParameter("preco"));
-                int qtd = Integer.parseInt(request.getParameter("qtd"));
+                User user = (User) session.getAttribute("user");
 
-                Produto produto = new Produto();
-                
-                produto.setProCodigo(codigo);
-                produto.setDescricao(descricao);
-                produto.setPreco(preco);
-                produto.setQtdEstoque(qtd);
-                
-                boolean alterou = ProdutoDB.alteraProduto(produto);
-
-                if (alterou) {
-                    out.println("<div class=\"alert bg-success\" role=\"alert\">");
-                    out.println("<svg class=\"glyph stroked checkmark\">");
-                    out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
-                    out.println("</svg> Produto alterado com sucesso!");
-                    out.println("<a href=\"listaProduto.jsp\" class=\"pull-right\">");
-                    out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                    out.println("</a>");
-                    out.println("</div>");
+                if (user == null) {
+                    session.invalidate();
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                 } else {
-                    out.println("<div class=\"alert bg-danger\" role=\"alert\">");
-                    out.println("<svg class=\"glyph stroked cancel\">");
-                    out.println("<use xlink:href=\"#stroked-cancel\"></use>");
-                    out.println("</svg> Erro na alteração do produto!");
-                    out.println("<a href=\"listaProduto.jsp\" class=\"pull-right\">");
-                    out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                    out.println("</a>");
-                    out.println("</div>");
+
+                    int codigo = Integer.parseInt(request.getParameter("codigo"));
+                    String descricao = request.getParameter("descricao");
+                    double preco = Double.parseDouble(request.getParameter("preco"));
+                    int qtd = Integer.parseInt(request.getParameter("qtd"));
+
+                    Produto produto = new Produto();
+
+                    produto.setProCodigo(codigo);
+                    produto.setDescricao(descricao);
+                    produto.setPreco(preco);
+                    produto.setQtdEstoque(qtd);
+
+                    boolean alterou = ProdutoDB.alteraProduto(produto);
+
+                    if (alterou) {
+                        out.println("<div class=\"alert bg-success\" role=\"alert\">");
+                        out.println("<svg class=\"glyph stroked checkmark\">");
+                        out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
+                        out.println("</svg> Produto alterado com sucesso!");
+                        out.println("<a href=\"listaProduto.jsp\" class=\"pull-right\">");
+                        out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                        out.println("</a>");
+                        out.println("</div>");
+                    } else {
+                        out.println("<div class=\"alert bg-danger\" role=\"alert\">");
+                        out.println("<svg class=\"glyph stroked cancel\">");
+                        out.println("<use xlink:href=\"#stroked-cancel\"></use>");
+                        out.println("</svg> Erro na alteração do produto!");
+                        out.println("<a href=\"listaProduto.jsp\" class=\"pull-right\">");
+                        out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                        out.println("</a>");
+                        out.println("</div>");
+                    }
                 }
+
             %>
 
         </div><!--/.main-->

@@ -4,6 +4,7 @@
     Author     : guilherme
 --%>
 
+<%@page import="Modelo.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,6 +25,14 @@
     <body>
         <%@include file="menu.html" %>
         <%@include file="header.html" %>
+        <%
+            User user = (User) session.getAttribute("user");
+
+            if (user == null) {
+                session.invalidate();
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+        %>
 
         <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
             <div class="row">

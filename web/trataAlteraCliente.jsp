@@ -4,6 +4,7 @@
     Author     : Guilherme
 --%>
 
+<%@page import="Modelo.User"%>
 <%@page import="Controle.ClienteDB"%>
 <%@page import="Modelo.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -42,47 +43,56 @@
             </div><!--/.row-->	
 
             <%
-                int codigo = Integer.parseInt(request.getParameter("codigo"));
-                int cep = Integer.parseInt(request.getParameter("cep"));
-                String nome = request.getParameter("nome");
-                String endereco = request.getParameter("endereco");
-                String sexo = request.getParameter("sexo");
-                String dt_nascto = request.getParameter("dt_nascto");
-                double saldo = Double.parseDouble(request.getParameter("saldo"));
-                String ativo = request.getParameter("ativo");
+                User user = (User) session.getAttribute("user");
 
-                Cliente cli = new Cliente();
-                
-                cli.setCliCodigo(codigo);
-                cli.setCep(cep);
-                cli.setNome(nome);
-                cli.setEndereco(endereco);
-                cli.setSexo(sexo);
-                cli.setDtNascto(dt_nascto);
-                cli.setSaldoDevedor(saldo);
-                cli.setAtivo(ativo);
-
-                boolean alterou = ClienteDB.alteraCliente(cli);
-
-                if (alterou) {
-                    out.println("<div class=\"alert bg-success\" role=\"alert\">");
-                    out.println("<svg class=\"glyph stroked checkmark\">");
-                    out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
-                    out.println("</svg> Cliente alterado com sucesso!");
-                    out.println("<a href=\"listaCliente.jsp\" class=\"pull-right\">");
-                    out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                    out.println("</a>");
-                    out.println("</div>");
+                if (user == null) {
+                    session.invalidate();
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                 } else {
-                    out.println("<div class=\"alert bg-danger\" role=\"alert\">");
-                    out.println("<svg class=\"glyph stroked cancel\">");
-                    out.println("<use xlink:href=\"#stroked-cancel\"></use>");
-                    out.println("</svg> Erro na alteração do cliente!");
-                    out.println("<a href=\"listaCliente.jsp\" class=\"pull-right\">");
-                    out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                    out.println("</a>");
-                    out.println("</div>");
+
+                    int codigo = Integer.parseInt(request.getParameter("codigo"));
+                    int cep = Integer.parseInt(request.getParameter("cep"));
+                    String nome = request.getParameter("nome");
+                    String endereco = request.getParameter("endereco");
+                    String sexo = request.getParameter("sexo");
+                    String dt_nascto = request.getParameter("dt_nascto");
+                    double saldo = Double.parseDouble(request.getParameter("saldo"));
+                    String ativo = request.getParameter("ativo");
+
+                    Cliente cli = new Cliente();
+
+                    cli.setCliCodigo(codigo);
+                    cli.setCep(cep);
+                    cli.setNome(nome);
+                    cli.setEndereco(endereco);
+                    cli.setSexo(sexo);
+                    cli.setDtNascto(dt_nascto);
+                    cli.setSaldoDevedor(saldo);
+                    cli.setAtivo(ativo);
+
+                    boolean alterou = ClienteDB.alteraCliente(cli);
+
+                    if (alterou) {
+                        out.println("<div class=\"alert bg-success\" role=\"alert\">");
+                        out.println("<svg class=\"glyph stroked checkmark\">");
+                        out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
+                        out.println("</svg> Cliente alterado com sucesso!");
+                        out.println("<a href=\"listaCliente.jsp\" class=\"pull-right\">");
+                        out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                        out.println("</a>");
+                        out.println("</div>");
+                    } else {
+                        out.println("<div class=\"alert bg-danger\" role=\"alert\">");
+                        out.println("<svg class=\"glyph stroked cancel\">");
+                        out.println("<use xlink:href=\"#stroked-cancel\"></use>");
+                        out.println("</svg> Erro na alteração do cliente!");
+                        out.println("<a href=\"listaCliente.jsp\" class=\"pull-right\">");
+                        out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                        out.println("</a>");
+                        out.println("</div>");
+                    }
                 }
+
             %>
 
         </div><!--/.main-->

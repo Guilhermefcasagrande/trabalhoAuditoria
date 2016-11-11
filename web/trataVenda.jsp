@@ -4,6 +4,7 @@
     Author     : guilherme
 --%>
 
+<%@page import="Modelo.User"%>
 <%@page import="Controle.VendaDB"%>
 <%@page import="Modelo.Venda"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -42,46 +43,53 @@
             <div class="row">
                 <div class="col-lg-12">
                     <%
+                        User user = (User) session.getAttribute("user");
 
-                        int cliente = Integer.parseInt(request.getParameter("cliente"));
-                        int cep = Integer.parseInt(request.getParameter("cep"));
-                        int produto = Integer.parseInt(request.getParameter("produto"));
-                        String data = request.getParameter("data");
-                        int qtd = Integer.parseInt(request.getParameter("qtd"));
-                        String dataPagto = request.getParameter("data_pagto");
-                        double valor = Double.parseDouble(request.getParameter("valor_pagto"));
-                        
-
-                        Venda venda = new Venda();
-                        venda.setCep(cep);
-                        venda.setCliCodigo(cliente);
-                        venda.setProCodigo(produto);
-                        venda.setData(data);
-                        venda.setQtdVenda(qtd);
-                        venda.setDataPagto(dataPagto);
-                        venda.setValorPagto(valor);
-
-                        boolean inseriu = VendaDB.insereVenda(venda);
-
-                        if (inseriu) {
-                            out.println("<div class=\"alert bg-success\" role=\"alert\">");
-                            out.println("<svg class=\"glyph stroked checkmark\">");
-                            out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
-                            out.println("</svg> Nova venda realizada com sucesso!");
-                            out.println("<a href=\"insereVenda.jsp\" class=\"pull-right\">");
-                            out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                            out.println("</a>");
-                            out.println("</div>");
+                        if (user == null) {
+                            session.invalidate();
+                            request.getRequestDispatcher("login.jsp").forward(request, response);
                         } else {
-                            out.println("<div class=\"alert bg-danger\" role=\"alert\">");
-                            out.println("<svg class=\"glyph stroked cancel\">");
-                            out.println("<use xlink:href=\"#stroked-cancel\"></use>");
-                            out.println("</svg> Erro no cadastro da Venda!");
-                            out.println("<a href=\"insereVenda.jsp\" class=\"pull-right\">");
-                            out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
-                            out.println("</a>");
-                            out.println("</div>");
+
+                            int cliente = Integer.parseInt(request.getParameter("cliente"));
+                            int cep = Integer.parseInt(request.getParameter("cep"));
+                            int produto = Integer.parseInt(request.getParameter("produto"));
+                            String data = request.getParameter("data");
+                            int qtd = Integer.parseInt(request.getParameter("qtd"));
+                            String dataPagto = request.getParameter("data_pagto");
+                            double valor = Double.parseDouble(request.getParameter("valor_pagto"));
+
+                            Venda venda = new Venda();
+                            venda.setCep(cep);
+                            venda.setCliCodigo(cliente);
+                            venda.setProCodigo(produto);
+                            venda.setData(data);
+                            venda.setQtdVenda(qtd);
+                            venda.setDataPagto(dataPagto);
+                            venda.setValorPagto(valor);
+
+                            boolean inseriu = VendaDB.insereVenda(venda);
+
+                            if (inseriu) {
+                                out.println("<div class=\"alert bg-success\" role=\"alert\">");
+                                out.println("<svg class=\"glyph stroked checkmark\">");
+                                out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
+                                out.println("</svg> Nova venda realizada com sucesso!");
+                                out.println("<a href=\"insereVenda.jsp\" class=\"pull-right\">");
+                                out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                                out.println("</a>");
+                                out.println("</div>");
+                            } else {
+                                out.println("<div class=\"alert bg-danger\" role=\"alert\">");
+                                out.println("<svg class=\"glyph stroked cancel\">");
+                                out.println("<use xlink:href=\"#stroked-cancel\"></use>");
+                                out.println("</svg> Erro no cadastro da Venda!");
+                                out.println("<a href=\"insereVenda.jsp\" class=\"pull-right\">");
+                                out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
+                                out.println("</a>");
+                                out.println("</div>");
+                            }
                         }
+
                     %>  
                 </div>
             </div>

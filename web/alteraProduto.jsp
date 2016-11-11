@@ -4,6 +4,7 @@
     Author     : guilherme
 --%>
 
+<%@page import="Modelo.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -25,6 +26,7 @@
         <%@include file="menu.html" %>
         <%@include file="header.html" %>
         <%
+
             int codigo = Integer.parseInt(request.getParameter("codigo"));
             String desc = request.getParameter("descricao");
             double preco = Double.parseDouble(request.getParameter("preco"));
