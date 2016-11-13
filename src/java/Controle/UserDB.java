@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 /**
  *
@@ -21,6 +22,7 @@ public class UserDB {
     private static String sqlUsuario = "select * from usuario where login = ? and senha = ?";
     private static String sqlTentativas = "update usuario set tentativas_login = ? where login = ?";
     private static String sqlUpdateSituacao = "update usuario set tentativas_login = ?, st_ativo = ? where login = ?";
+    private static String sqlInsere = "insert into usuario (nome,login,senha,email,tentativas_login,st_ativo,) values (?,?,?,?,?,?)";
 
     public static User getUsuario(String login, String senha) {
         User usuario = null;
@@ -145,6 +147,31 @@ public class UserDB {
             System.out.println("Erro de sql: " + erro);
         } finally {
             return alterou;
+        }
+    }
+    
+    public static boolean insereUser(User usuario) throws ParseException {
+        boolean inseriu = false;
+
+        try {
+            Connection conexao = ConexaoElep.getConnection();
+            PreparedStatement pstmt = conexao.prepareStatement(sqlInsere);
+            pstmt.setString(1, usuario.getNome());
+            pstmt.setString(2, usuario.getLogin());
+            pstmt.setString(3, usuario.getSenha());
+            pstmt.setString(4, usuario.getEmail());
+            pstmt.setInt(5, usuario.getTentativasLogin());
+            pstmt.setString(6, usuario.getStAtivo());
+            
+            pstmt.execute();
+            ConexaoElep.fechaConexao(conexao);
+
+            inseriu = true;
+
+        } catch (SQLException erro) {
+            System.out.println("Erro de SQL " + erro.getMessage());
+        } finally {
+            return inseriu;
         }
     }
 
