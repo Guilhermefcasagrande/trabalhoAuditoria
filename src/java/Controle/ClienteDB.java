@@ -6,6 +6,7 @@
 package Controle;
 
 import Conexao.ConexaoElep;
+import Conexao.ConexaoPostgres;
 import Modelo.Cliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,6 +31,8 @@ public class ClienteDB {
         boolean inseriu = false;
 
         try {
+
+            //Connection conexao = ConexaoPostgres.getConnection();
             Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlInsere);
             pstmt.setInt(1, cliente.getCep());
@@ -43,7 +46,8 @@ public class ClienteDB {
             ConexaoElep.fechaConexao(conexao);
 
             inseriu = true;
-
+            //ConexaoPostgres.fechaConexao(conexao);
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL " + erro.getMessage());
         } finally {
@@ -55,6 +59,7 @@ public class ClienteDB {
         ArrayList lista = new ArrayList();
 
         try {
+            //Connection conexao = ConexaoPostgres.getConnection();
             Connection conexao = ConexaoElep.getConnection();
             Statement stm = conexao.createStatement();
             ResultSet rs = stm.executeQuery(sqlLista);
@@ -82,6 +87,7 @@ public class ClienteDB {
                 lista.add(cliente);
             }
             ConexaoElep.fechaConexao(conexao);
+            //ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL: " + erro.getMessage());
         } finally {
@@ -94,6 +100,7 @@ public class ClienteDB {
         boolean excluiu = false;
 
         try {
+            //Connection conexao = ConexaoPostgres.getConnection();
             Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlExclui);
             pstmt.setInt(1, cliente.getCliCodigo());
@@ -102,6 +109,7 @@ public class ClienteDB {
                 excluiu = true;
             }
             ConexaoElep.fechaConexao(conexao);
+            //ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL " + erro.getMessage());
         } finally {
@@ -114,6 +122,7 @@ public class ClienteDB {
         boolean alterou = false;
 
         try {
+            //Connection conexao = ConexaoPostgres.getConnection();
             Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlAltera);
 
@@ -132,6 +141,7 @@ public class ClienteDB {
                 alterou = true;
             }
             ConexaoElep.fechaConexao(conexao);
+            //ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQl " + erro.getMessage());
         } finally {

@@ -49,7 +49,7 @@
             </div><!--/.row-->	
 
             <div class="row">
-                <form role="form" action="trataProduto.jsp" method="post">
+                <form role="form" action="trataUsuario.jsp" method="post">
                     <div class="form-group">
                         <label>Nome</label>
                         <input class="form-control" name="nome" id="nome">

@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @author Guilherme
  */
 public class ConexaoPostgres {
-    
+
     private static String driver = "org.postgresql.Driver";
     private static String servidor = "localhost";
     private static String banco = "trabAud";
@@ -40,4 +40,16 @@ public class ConexaoPostgres {
             return conexao;
         }
     }
+
+    public static void fechaConexao(Connection conexao) {
+        if (conexao != null) {
+            try {
+                conexao.close();
+                System.out.println("Conexão Fechada");
+            } catch (SQLException erro) {
+                System.out.println("Erro ao fechar Conexao");
+            }
+        }
+    }
+
 }

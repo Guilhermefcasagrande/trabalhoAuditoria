@@ -6,6 +6,7 @@
 package Controle;
 
 import Conexao.ConexaoElep;
+import Conexao.ConexaoPostgres;
 import Modelo.Log;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +23,7 @@ public class GravaLog {
         boolean inseriu = false;
         
         try {
-
+            //Connection conexao = ConexaoPostgres.getConnection();
             Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlGravaLog);
             pstmt.setInt(1, log.getUsrCodigo());
@@ -34,7 +35,8 @@ public class GravaLog {
 
             inseriu = true;
             System.out.println("Log Gravado");
-
+            //ConexaoPostgres.fechaConexao(conexao);
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL " + erro.getMessage());
         } finally {

@@ -6,6 +6,7 @@
 package Controle;
 
 import Conexao.ConexaoElep;
+import Conexao.ConexaoPostgres;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +23,7 @@ public class VerificaAcao {
 
     public int buscaAcao(String acao) {
         try {
+            //Connection conexao = ConexaoElep.getConnection();
             Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlBusca);
             pstmt.setString(1, acao);
@@ -29,7 +31,8 @@ public class VerificaAcao {
             while (rs.next()) {
                 acCodigo = rs.getInt("ac_codigo");
             }
-
+            //ConexaoPostgres.fechaConexao(conexao);
+            ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de sql " + erro);
         } finally {
