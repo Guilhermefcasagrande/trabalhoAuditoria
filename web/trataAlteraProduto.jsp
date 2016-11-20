@@ -4,6 +4,9 @@
     Author     : guilherme
 --%>
 
+<%@page import="Controle.VerificaAcao"%>
+<%@page import="Modelo.Log"%>
+<%@page import="Controle.GravaLog"%>
 <%@page import="Modelo.User"%>
 <%@page import="Controle.ProdutoDB"%>
 <%@page import="Modelo.Produto"%>
@@ -73,6 +76,18 @@
                         out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
                         out.println("</a>");
                         out.println("</div>");
+
+                        String acao = "Alterar";
+                        VerificaAcao verifica = new VerificaAcao();
+                        int acCodigo = verifica.buscaAcao(acao);
+
+                        Log log = new Log();
+                        log.setAcCodigo(acCodigo);
+                        log.setUsrCodigo(user.getUsrCodigo());
+                        log.setTabela("Produto");
+
+                        GravaLog.log(log);
+
                     } else {
                         out.println("<div class=\"alert bg-danger\" role=\"alert\">");
                         out.println("<svg class=\"glyph stroked cancel\">");
@@ -107,12 +122,12 @@
 
             $(window).on('resize', function () {
                 if ($(window).width() > 768)
-                    $('#sidebar-collapse').collapse('show')
-            })
+                    $('#sidebar-collapse').collapse('show');
+            });
             $(window).on('resize', function () {
                 if ($(window).width() <= 767)
-                    $('#sidebar-collapse').collapse('hide')
-            })
+                    $('#sidebar-collapse').collapse('hide');
+            });
         </script>	
     </body>
 

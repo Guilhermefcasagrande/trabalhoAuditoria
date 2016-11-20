@@ -1,17 +1,16 @@
 <%-- 
-    Document   : alteraCidade
-    Created on : 19/10/2016, 11:30:24
-    Author     : guilherme
+    Document   : alteraUsuario
+    Created on : 20/11/2016, 00:16:18
+    Author     : Guilherme
 --%>
 
-<%@page import="Modelo.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Alteração de Cidades</title>
+        <title>Alterar Usuários</title>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/datepicker3.css" rel="stylesheet">
@@ -25,11 +24,13 @@
     <body>
         <%@include file="menu.html" %>
         <%@include file="header.html" %>
-
         <%
-            int cep = Integer.parseInt(request.getParameter("cep"));
+
+            String codigo = request.getParameter("codigo");
             String nome = request.getParameter("nome");
-            String estado = request.getParameter("estado");
+            String login = request.getParameter("login");
+            String email = request.getParameter("email");
+            String ativo = request.getParameter("ativo");
 
         %>
         <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
@@ -42,21 +43,21 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Alterar Cidade</h1>
-                </div>
-            </div><!--/.row-->	
-
-            <div class="row">
-                <div class="form-group">
-                    <a class="btn btn-primary" href="listaCidade.jsp">Cancelar</a>
+                    <h1 class="page-header">Alterar Clientes</h1>
                 </div>
             </div>
 
             <div class="row">
-                <form role="form" action="trataAlteraCidade.jsp" method="post">
+                <div class="form-group">
+                    <a class="btn btn-primary" href="listaClient.jsp">Cancelar</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <form role="form" action="trataAlteraUsuario.jsp" method="post">
                     <div class="form-group">
-                        <label>CEP</label>
-                        <input class="form-control" name="cep" id="cep" value="<%=cep%>">
+                        <label>Código</label>
+                        <input class="form-control" name="codigo" id="codigo" value="<%=codigo%>">
                     </div>
 
                     <div class="form-group">
@@ -65,8 +66,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Estado</label>
-                        <input class="form-control" name="estado" id="estado" value="<%=estado%>">
+                        <label>Login</label>
+                        <input class="form-control" name="login" id="login" value="<%=login%>">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input class="form-control" name="email" id="email" value="<%=email%>">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Situação Ativo</label>
+                        <input class="form-control" name="ativo" id="ativo" value="<%=ativo%>">
                     </div>
 
                     <div class="form-group">

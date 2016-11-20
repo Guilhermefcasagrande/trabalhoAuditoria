@@ -56,7 +56,6 @@
                                     session.invalidate();
                                     request.getRequestDispatcher("login.jsp").forward(request, response);
                                 } else {
-                                    System.out.println("testessss");
                                     String acao = "Consultar";
                                     VerificaAcao verifica = new VerificaAcao();
                                     int acCodigo = verifica.buscaAcao(acao);
@@ -123,12 +122,12 @@
 
             $(window).on('resize', function () {
                 if ($(window).width() > 768)
-                    $('#sidebar-collapse').collapse('show')
-            })
+                    $('#sidebar-collapse').collapse('show');
+            });
             $(window).on('resize', function () {
                 if ($(window).width() <= 767)
-                    $('#sidebar-collapse').collapse('hide')
-            })
+                    $('#sidebar-collapse').collapse('hide');
+            });
         </script>	
     </body>
 

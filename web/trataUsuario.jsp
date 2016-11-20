@@ -1,15 +1,14 @@
 <%-- 
-    Document   : trataCliente
-    Created on : 21/10/2016, 09:47:51
-    Author     : guilherme
+    Document   : trataUsuario
+    Created on : 19/11/2016, 23:42:56
+    Author     : Guilherme
 --%>
 
-<%@page import="Controle.GravaLog"%>
-<%@page import="Modelo.Log"%>
 <%@page import="Controle.VerificaAcao"%>
+<%@page import="Modelo.Log"%>
+<%@page import="Controle.GravaLog"%>
+<%@page import="Controle.UserDB"%>
 <%@page import="Modelo.User"%>
-<%@page import="Controle.ClienteDB"%>
-<%@page import="Modelo.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -53,31 +52,29 @@
                             request.getRequestDispatcher("login.jsp").forward(request, response);
                         } else {
 
-                            int cep = Integer.parseInt(request.getParameter("cep"));
                             String nome = request.getParameter("nome");
-                            String endereco = request.getParameter("endereco");
-                            String sexo = request.getParameter("sexo");
-                            String dt = request.getParameter("dt_nascto");
-                            double saldo = Double.parseDouble(request.getParameter("saldo"));
-                            String ativo = request.getParameter("ativo");
+                            String login = request.getParameter("login");
+                            String senha = request.getParameter("senha");
+                            String email = request.getParameter("email");
+                            int tentLogin = 0;
+                            String stAtivo = "S";
 
-                            Cliente cliente = new Cliente();
-                            cliente.setCep(cep);
-                            cliente.setNome(nome);
-                            cliente.setEndereco(endereco);
-                            cliente.setSexo(sexo);
-                            cliente.setDtNascto(dt);
-                            cliente.setSaldoDevedor(saldo);
-                            cliente.setAtivo(ativo);
+                            User usuario = new User();
+                            usuario.setNome(nome);
+                            usuario.setLogin(login);
+                            usuario.setSenha(senha);
+                            usuario.setEmail(email);
+                            usuario.setTentativasLogin(tentLogin);
+                            usuario.setStAtivo(stAtivo);
 
-                            boolean inseriu = ClienteDB.insereCliente(cliente);
+                            boolean inseriu = UserDB.insereUser(usuario);
 
                             if (inseriu) {
                                 out.println("<div class=\"alert bg-success\" role=\"alert\">");
                                 out.println("<svg class=\"glyph stroked checkmark\">");
                                 out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
-                                out.println("</svg> Cliente inserido com sucesso!");
-                                out.println("<a href=\"insereCliente.jsp\" class=\"pull-right\">");
+                                out.println("</svg> Usuario inserido com sucesso!");
+                                out.println("<a href=\"insereUsuario.jsp\" class=\"pull-right\">");
                                 out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
                                 out.println("</a>");
                                 out.println("</div>");
@@ -89,7 +86,7 @@
                                 Log log = new Log();
                                 log.setAcCodigo(acCodigo);
                                 log.setUsrCodigo(user.getUsrCodigo());
-                                log.setTabela("Cliente");
+                                log.setTabela("Usuario");
 
                                 GravaLog.log(log);
 
@@ -97,8 +94,8 @@
                                 out.println("<div class=\"alert bg-danger\" role=\"alert\">");
                                 out.println("<svg class=\"glyph stroked cancel\">");
                                 out.println("<use xlink:href=\"#stroked-cancel\"></use>");
-                                out.println("</svg> Erro no cadastro do Cliente!");
-                                out.println("<a href=\"insereCliente.jsp\" class=\"pull-right\">");
+                                out.println("</svg> Erro no cadastro do Usuario!");
+                                out.println("<a href=\"insereUsuario.jsp\" class=\"pull-right\">");
                                 out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
                                 out.println("</a>");
                                 out.println("</div>");

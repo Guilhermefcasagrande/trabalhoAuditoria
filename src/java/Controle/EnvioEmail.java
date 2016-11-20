@@ -58,7 +58,7 @@ public class EnvioEmail {
             //Assunto
             message.setSubject("Usuário tentando Logar");
             //Corpo
-            message.setText("O usuário tentou fazer login mais de 3 vezes sem sucesso e foi desativado.");
+            message.setText("O usuário '"+login+"' tentou fazer login mais de 3 vezes sem sucesso e foi desativado.");
             /**
              * Método para enviar a mensagem criada
              */

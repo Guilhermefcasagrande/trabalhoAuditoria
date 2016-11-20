@@ -1,23 +1,22 @@
 <%-- 
-    Document   : listaCidade
-    Created on : 19/10/2016, 10:19:11
-    Author     : guilherme
+    Document   : listaUsuario
+    Created on : 20/11/2016, 00:06:32
+    Author     : Guilherme
 --%>
 
+<%@page import="Controle.UserDB"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="Controle.GravaLog"%>
 <%@page import="Modelo.Log"%>
-<%@page import="Modelo.User"%>
 <%@page import="Controle.VerificaAcao"%>
-<%@page import="Controle.CidadeDB"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="Modelo.Cidade"%>
+<%@page import="Modelo.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Cadastro de Cidades</title>
+        <title>Consulta de Usuários</title>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/datepicker3.css" rel="stylesheet">
@@ -42,7 +41,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Consulta de Cidades</h1>
+                    <h1 class="page-header">Consulta de Usuários</h1>
                 </div>
             </div>
 
@@ -57,7 +56,7 @@
                                     session.invalidate();
                                     request.getRequestDispatcher("login.jsp").forward(request, response);
                                 } else {
-                                    
+
                                     String acao = "Consultar";
                                     VerificaAcao verifica = new VerificaAcao();
                                     int acCodigo = verifica.buscaAcao(acao);
@@ -65,31 +64,37 @@
                                     Log log = new Log();
                                     log.setAcCodigo(acCodigo);
                                     log.setUsrCodigo(user.getUsrCodigo());
-                                    log.setTabela("Cidade");
+                                    log.setTabela("Usuario");
 
                                     GravaLog.log(log);
 
-                                    ArrayList<Cidade> lista = new ArrayList();
-                                    lista = CidadeDB.listaCidade();
+                                    ArrayList<User> lista = new ArrayList();
+                                    lista = UserDB.listaUsuario();
 
                                     out.println("<table class=\"table table-bordered\">");
                                     out.println("<thead>");
                                     out.println("<tr>");
-                                    out.println("<th>Cep</th>");
+                                    out.println("<th>Código</th>");
                                     out.println("<th>Nome</th>");
-                                    out.println("<th>Estado</th>");
+                                    out.println("<th>Login</th>");
+                                    out.println("<th>Email</th>");
+                                    out.println("<th>Ativo</th>");
                                     out.println("<th>Ações</th>");
                                     out.println("</tr>");
                                     out.println("</thead>");
                                     out.println("<tbody>");
 
                                     for (int i = 0; i < lista.size(); i++) {
-                                        Cidade cidade = lista.get(i);
+                                        User usuario = lista.get(i);
                                         out.println("<tr>");
-                                        out.println("<td>" + cidade.getCep() + "</td>");
-                                        out.println("<td>" + cidade.getNome() + "</td>");
-                                        out.println("<td>" + cidade.getEstado() + "</td>");
-                                        out.println("<td><a href=\"excluiCidade.jsp?cep=" + cidade.getCep() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a><a href=\"alteraCidade.jsp?cep=" + cidade.getCep() + "&nome=" + cidade.getNome() + "&estado=" + cidade.getEstado() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
+                                        out.println("<td>" + usuario.getUsrCodigo() + "</td>");
+                                        out.println("<td>" + usuario.getNome() + "</td>");
+                                        out.println("<td>" + usuario.getLogin() + "</td>");
+                                        out.println("<td>" + usuario.getEmail() + "</td>");
+                                        out.println("<td>" + usuario.getStAtivo() + "</td>");
+                                        out.println("<td>"
+                                                + "<a href=\"alteraUsuario.jsp?codigo=" + usuario.getUsrCodigo() + "&nome=" + usuario.getNome() + "&login=" + usuario.getLogin() + "&email="
+                                                + usuario.getEmail() + "&ativo=" + usuario.getStAtivo() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
                                         out.println("</tr>");
                                     }
 

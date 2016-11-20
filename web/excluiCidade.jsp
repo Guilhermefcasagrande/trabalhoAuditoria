@@ -113,12 +113,12 @@
 
             $(window).on('resize', function () {
                 if ($(window).width() > 768)
-                    $('#sidebar-collapse').collapse('show')
-            })
+                    $('#sidebar-collapse').collapse('show');
+            });
             $(window).on('resize', function () {
                 if ($(window).width() <= 767)
-                    $('#sidebar-collapse').collapse('hide')
-            })
+                    $('#sidebar-collapse').collapse('hide');
+            });
         </script>	
     </body>
 

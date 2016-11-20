@@ -1,22 +1,21 @@
 <%-- 
-    Document   : excluiCliente
-    Created on : 23/10/2016, 21:17:06
+    Document   : trataAlteraUsuario
+    Created on : 20/11/2016, 00:21:36
     Author     : Guilherme
 --%>
 
-<%@page import="Controle.GravaLog"%>
 <%@page import="Controle.VerificaAcao"%>
 <%@page import="Modelo.Log"%>
+<%@page import="Controle.GravaLog"%>
+<%@page import="Controle.UserDB"%>
 <%@page import="Modelo.User"%>
-<%@page import="Controle.ClienteDB"%>
-<%@page import="Modelo.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Eclusão de Clientes</title>
+        <title>Alterar Cliente</title>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/datepicker3.css" rel="stylesheet">
@@ -41,10 +40,9 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Excluir Clientes</h1>
+                    <h1 class="page-header">Alterar Cliente</h1>
                 </div>
-            </div><!--/.row-->
-
+            </div><!--/.row-->	
 
             <%
                 User user = (User) session.getAttribute("user");
@@ -53,38 +51,49 @@
                     session.invalidate();
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                 } else {
+
                     int codigo = Integer.parseInt(request.getParameter("codigo"));
+                    String nome = request.getParameter("nome");
+                    String login = request.getParameter("login");
+                    String email = request.getParameter("email");
+                    String ativo = request.getParameter("ativo");
 
-                    Cliente cli = new Cliente();
-                    cli.setCliCodigo(codigo);
+                    User usuario = new User();
+                    usuario.setUsrCodigo(codigo);
+                    usuario.setNome(nome);
+                    usuario.setLogin(login);
+                    usuario.setEmail(email);
+                    usuario.setStAtivo(ativo);
 
-                    boolean excluiu = ClienteDB.excluiCliente(cli);
-                    if (excluiu) {
+                    boolean alterou = UserDB.alteraUsuario(usuario);
+
+                    if (alterou) {
                         out.println("<div class=\"alert bg-success\" role=\"alert\">");
                         out.println("<svg class=\"glyph stroked checkmark\">");
                         out.println("<use xlink:href=\"#stroked-checkmark\"></use>");
-                        out.println("</svg> Cliente excluído com sucesso!");
-                        out.println("<a href=\"listaCliente.jsp\" class=\"pull-right\">");
+                        out.println("</svg> Usuario alterado com sucesso!");
+                        out.println("<a href=\"listaUsuario.jsp\" class=\"pull-right\">");
                         out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
                         out.println("</a>");
                         out.println("</div>");
-                        
-                        String acao = "Excluir";
+
+                        String acao = "Alterar";
                         VerificaAcao verifica = new VerificaAcao();
                         int acCodigo = verifica.buscaAcao(acao);
 
                         Log log = new Log();
                         log.setAcCodigo(acCodigo);
                         log.setUsrCodigo(user.getUsrCodigo());
-                        log.setTabela("Cliente");
-                        
+                        log.setTabela("Usuario");
+
                         GravaLog.log(log);
+
                     } else {
                         out.println("<div class=\"alert bg-danger\" role=\"alert\">");
                         out.println("<svg class=\"glyph stroked cancel\">");
                         out.println("<use xlink:href=\"#stroked-cancel\"></use>");
-                        out.println("</svg> Erro na exclusão do cliente!");
-                        out.println("<a href=\"listaCliente.jsp\" class=\"pull-right\">");
+                        out.println("</svg> Erro na alteração do Usuario!");
+                        out.println("<a href=\"listaUsuario.jsp\" class=\"pull-right\">");
                         out.println("<span class=\"glyphicon glyphicon-remove\"></span>");
                         out.println("</a>");
                         out.println("</div>");

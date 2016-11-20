@@ -12,7 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 /**
  *
@@ -23,7 +25,9 @@ public class UserDB {
     private static String sqlUsuario = "select * from usuario where login = ? and senha = ?";
     private static String sqlTentativas = "update usuario set tentativas_login = ? where login = ?";
     private static String sqlUpdateSituacao = "update usuario set tentativas_login = ?, st_ativo = ? where login = ?";
-    private static String sqlInsere = "insert into usuario (nome,login,senha,email,tentativas_login,st_ativo,) values (?,?,?,?,?,?)";
+    private static String sqlInsere = "insert into usuario (nome,login,senha,email,tentativas_login,st_ativo) values (?,?,?,?,?,?)";
+    private static String sqlLista = "select * from usuario order by usr_codigo";
+    private static String sqlAltera = "update usuario set nome = ?, login = ?, email = ?, st_ativo = ? where usr_codigo = ?";
 
     public static User getUsuario(String login, String senha) {
         User usuario = null;
@@ -186,6 +190,68 @@ public class UserDB {
         } finally {
             return inseriu;
         }
+    }
+    
+    public static ArrayList listaUsuario() {
+        ArrayList lista = new ArrayList();
+
+        try {
+            //Connection conexao = ConexaoPostgres.getConnection();
+            Connection conexao = ConexaoElep.getConnection();
+            Statement stm = conexao.createStatement();
+            ResultSet rs = stm.executeQuery(sqlLista);
+            while (rs.next()) {
+                int codigo = rs.getInt("usr_codigo");
+                String nome = rs.getString("nome");
+                String login = rs.getString("login");
+                String email = rs.getString("email");
+                String ativo = rs.getString("st_ativo");
+
+               User usuario = new User();
+               usuario.setNome(nome);
+               usuario.setUsrCodigo(codigo);
+               usuario.setLogin(login);
+               usuario.setEmail(email);
+               usuario.setStAtivo(ativo);
+
+                lista.add(usuario);
+            }
+            ConexaoElep.fechaConexao(conexao);
+            //ConexaoPostgres.fechaConexao(conexao);
+        } catch (SQLException erro) {
+            System.out.println("Erro de SQL: " + erro.getMessage());
+        } finally {
+            return lista;
+        }
+
+    }
+    
+    public static boolean alteraUsuario(User usuario) {
+        boolean alterou = false;
+
+        try {
+            //Connection conexao = ConexaoPostgres.getConnection();
+            Connection conexao = ConexaoElep.getConnection();
+            PreparedStatement pstmt = conexao.prepareStatement(sqlAltera);
+
+            pstmt.setString(1, usuario.getNome());
+            pstmt.setString(2, usuario.getLogin());
+            pstmt.setString(3, usuario.getEmail());
+            pstmt.setString(4, usuario.getStAtivo());
+            pstmt.setInt(5, usuario.getUsrCodigo());
+
+            int valor = pstmt.executeUpdate();
+            if (valor == 1) {
+                alterou = true;
+            }
+            ConexaoElep.fechaConexao(conexao);
+            //ConexaoPostgres.fechaConexao(conexao);
+        } catch (SQLException erro) {
+            System.out.println("Erro de SQl " + erro.getMessage());
+        } finally {
+            return alterou;
+        }
+
     }
 
 }
