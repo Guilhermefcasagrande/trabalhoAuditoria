@@ -23,8 +23,8 @@ public class GravaLog {
         boolean inseriu = false;
         
         try {
-            //Connection conexao = ConexaoPostgres.getConnection();
-            Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
+            //Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlGravaLog);
             pstmt.setInt(1, log.getUsrCodigo());
             pstmt.setInt(2, log.getAcCodigo());
@@ -35,8 +35,8 @@ public class GravaLog {
 
             inseriu = true;
             System.out.println("Log Gravado");
-            //ConexaoPostgres.fechaConexao(conexao);
-            ConexaoElep.fechaConexao(conexao);
+            ConexaoPostgres.fechaConexao(conexao);
+            //ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL " + erro.getMessage());
         } finally {

@@ -46,64 +46,62 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <%
-                                User user = (User) session.getAttribute("user");
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <%
+                            User user = (User) session.getAttribute("user");
 
-                                if (user == null) {
-                                    session.invalidate();
-                                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                                } else {
+                            if (user == null) {
+                                session.invalidate();
+                                request.getRequestDispatcher("login.jsp").forward(request, response);
+                            } else {
 
-                                    String acao = "Consultar";
-                                    VerificaAcao verifica = new VerificaAcao();
-                                    int acCodigo = verifica.buscaAcao(acao);
+                                String acao = "Consultar";
+                                VerificaAcao verifica = new VerificaAcao();
+                                int acCodigo = verifica.buscaAcao(acao);
 
-                                    Log log = new Log();
-                                    log.setAcCodigo(acCodigo);
-                                    log.setUsrCodigo(user.getUsrCodigo());
-                                    log.setTabela("Usuario");
+                                Log log = new Log();
+                                log.setAcCodigo(acCodigo);
+                                log.setUsrCodigo(user.getUsrCodigo());
+                                log.setTabela("Usuario");
 
-                                    GravaLog.log(log);
+                                GravaLog.log(log);
 
-                                    ArrayList<User> lista = new ArrayList();
-                                    lista = UserDB.listaUsuario();
+                                ArrayList<User> lista = new ArrayList();
+                                lista = UserDB.listaUsuario();
 
-                                    out.println("<table class=\"table table-bordered\">");
-                                    out.println("<thead>");
+                                out.println("<table class=\"table table-bordered\">");
+                                out.println("<thead>");
+                                out.println("<tr>");
+                                out.println("<th>Código</th>");
+                                out.println("<th>Nome</th>");
+                                out.println("<th>Login</th>");
+                                out.println("<th>Email</th>");
+                                out.println("<th>Ativo</th>");
+                                out.println("<th>Ações</th>");
+                                out.println("</tr>");
+                                out.println("</thead>");
+                                out.println("<tbody>");
+
+                                for (int i = 0; i < lista.size(); i++) {
+                                    User usuario = lista.get(i);
                                     out.println("<tr>");
-                                    out.println("<th>Código</th>");
-                                    out.println("<th>Nome</th>");
-                                    out.println("<th>Login</th>");
-                                    out.println("<th>Email</th>");
-                                    out.println("<th>Ativo</th>");
-                                    out.println("<th>Ações</th>");
+                                    out.println("<td>" + usuario.getUsrCodigo() + "</td>");
+                                    out.println("<td>" + usuario.getNome() + "</td>");
+                                    out.println("<td>" + usuario.getLogin() + "</td>");
+                                    out.println("<td>" + usuario.getEmail() + "</td>");
+                                    out.println("<td>" + usuario.getStAtivo() + "</td>");
+                                    out.println("<td>"
+                                            + "<a href=\"alteraUsuario.jsp?codigo=" + usuario.getUsrCodigo() + "&nome=" + usuario.getNome() + "&login=" + usuario.getLogin() + "&email="
+                                            + usuario.getEmail() + "&ativo=" + usuario.getStAtivo() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
                                     out.println("</tr>");
-                                    out.println("</thead>");
-                                    out.println("<tbody>");
-
-                                    for (int i = 0; i < lista.size(); i++) {
-                                        User usuario = lista.get(i);
-                                        out.println("<tr>");
-                                        out.println("<td>" + usuario.getUsrCodigo() + "</td>");
-                                        out.println("<td>" + usuario.getNome() + "</td>");
-                                        out.println("<td>" + usuario.getLogin() + "</td>");
-                                        out.println("<td>" + usuario.getEmail() + "</td>");
-                                        out.println("<td>" + usuario.getStAtivo() + "</td>");
-                                        out.println("<td>"
-                                                + "<a href=\"alteraUsuario.jsp?codigo=" + usuario.getUsrCodigo() + "&nome=" + usuario.getNome() + "&login=" + usuario.getLogin() + "&email="
-                                                + usuario.getEmail() + "&ativo=" + usuario.getStAtivo() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
-                                        out.println("</tr>");
-                                    }
-
-                                    out.println("</tbody>");
-                                    out.println("</table>");
                                 }
 
-                            %> 
-                        </div>
+                                out.println("</tbody>");
+                                out.println("</table>");
+                            }
+
+                        %> 
                     </div>
                 </div>
             </div>

@@ -32,8 +32,8 @@ public class UserDB {
     public static User getUsuario(String login, String senha) {
         User usuario = null;
         try {
-            //Connection conexao = ConexaoPostgres.getConnection();
-            Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
+            //Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlUsuario);
             pstmt.setString(1, login);
             pstmt.setString(2, senha);
@@ -56,8 +56,8 @@ public class UserDB {
                 usuario.setStAtivo(ativo);
 
             }
-            ConexaoElep.fechaConexao(conexao);
-            //ConexaoPostgres.fechaConexao(conexao);
+            //ConexaoElep.fechaConexao(conexao);
+            ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro SQL: " + erro.getMessage());
         } finally {
@@ -78,8 +78,8 @@ public class UserDB {
         if (qtd < 2) {
             int aux = qtd;
             try {
-                //Connection conexao = ConexaoPostgres.getConnection();
-                Connection conexao = ConexaoElep.getConnection();
+                Connection conexao = ConexaoPostgres.getConnection();
+                //Connection conexao = ConexaoElep.getConnection();
                 PreparedStatement pstmt = conexao.prepareStatement(sqlTentativas);
                 pstmt.setInt(1, aux + 1);
                 pstmt.setString(2, login);
@@ -88,8 +88,8 @@ public class UserDB {
                 if (valor == 1) {
                     alterou = true;
                 }
-                ConexaoElep.fechaConexao(conexao);
-                //ConexaoPostgres.fechaConexao(conexao);
+                //ConexaoElep.fechaConexao(conexao);
+                ConexaoPostgres.fechaConexao(conexao);
             } catch (SQLException erro) {
                 System.out.println("Erro de sql aqui: " + erro);
             }
@@ -97,16 +97,16 @@ public class UserDB {
         } else if (qtd >= 2) {
             int aux = qtd;
             try {
-                //Connection conexao = ConexaoPostgres.getConnection();
-                Connection conexao = ConexaoElep.getConnection();
+                Connection conexao = ConexaoPostgres.getConnection();
+                //Connection conexao = ConexaoElep.getConnection();
                 PreparedStatement pstmt = conexao.prepareStatement(sqlUpdateSituacao);
                 pstmt.setInt(1, aux + 1);
                 pstmt.setString(2, "N");
                 pstmt.setString(3, login);
 
                 pstmt.executeUpdate();
-                ConexaoElep.fechaConexao(conexao);
-                //ConexaoPostgres.fechaConexao(conexao);
+                //ConexaoElep.fechaConexao(conexao);
+                ConexaoPostgres.fechaConexao(conexao);
 
             } catch (SQLException erro) {
                 System.out.println("Erro de sql: " + erro);
@@ -124,16 +124,16 @@ public class UserDB {
         String sqlBuscaQtd = "select tentativas_login from usuario where login = ?";
         int qtd = 0;
         try {
-            //Connection conexao = ConexaoPostgres.getConnection();
-            Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
+            //Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlBuscaQtd);
             pstmt.setString(1, login);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 qtd = rs.getInt("tentativas_login");
             }
-            ConexaoElep.fechaConexao(conexao);
-            //ConexaoPostgres.fechaConexao(conexao);
+            //ConexaoElep.fechaConexao(conexao);
+            ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de sql: " + erro);
         } finally {
@@ -145,8 +145,8 @@ public class UserDB {
     public static boolean updateTentativasLogin(String login) {
         boolean alterou = false;
         try {
-            //Connection conexao = ConexaoPostgres.getConnection();
-            Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
+            //Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlUpdateSituacao);
             pstmt.setInt(1, 0);
             pstmt.setString(2, "S");
@@ -156,8 +156,8 @@ public class UserDB {
             if (valor == 1) {
                 alterou = true;
             }
-            ConexaoElep.fechaConexao(conexao);
-            //ConexaoPostgres.fechaConexao(conexao);
+            //ConexaoElep.fechaConexao(conexao);
+            ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de sql: " + erro);
         } finally {
@@ -169,8 +169,8 @@ public class UserDB {
         boolean inseriu = false;
 
         try {
-            //Connection conexao = ConexaoPostgres.getConnection();
-            Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
+            //Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlInsere);
             pstmt.setString(1, usuario.getNome());
             pstmt.setString(2, usuario.getLogin());
@@ -180,8 +180,8 @@ public class UserDB {
             pstmt.setString(6, usuario.getStAtivo());
             
             pstmt.execute();
-            ConexaoElep.fechaConexao(conexao);
-            //ConexaoPostgres.fechaConexao(conexao);
+            //ConexaoElep.fechaConexao(conexao);
+            ConexaoPostgres.fechaConexao(conexao);
 
             inseriu = true;
 
@@ -196,8 +196,8 @@ public class UserDB {
         ArrayList lista = new ArrayList();
 
         try {
-            //Connection conexao = ConexaoPostgres.getConnection();
-            Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
+            //Connection conexao = ConexaoElep.getConnection();
             Statement stm = conexao.createStatement();
             ResultSet rs = stm.executeQuery(sqlLista);
             while (rs.next()) {
@@ -216,8 +216,8 @@ public class UserDB {
 
                 lista.add(usuario);
             }
-            ConexaoElep.fechaConexao(conexao);
-            //ConexaoPostgres.fechaConexao(conexao);
+            //ConexaoElep.fechaConexao(conexao);
+            ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL: " + erro.getMessage());
         } finally {
@@ -230,8 +230,8 @@ public class UserDB {
         boolean alterou = false;
 
         try {
-            //Connection conexao = ConexaoPostgres.getConnection();
-            Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
+            //Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlAltera);
 
             pstmt.setString(1, usuario.getNome());
@@ -244,8 +244,8 @@ public class UserDB {
             if (valor == 1) {
                 alterou = true;
             }
-            ConexaoElep.fechaConexao(conexao);
-            //ConexaoPostgres.fechaConexao(conexao);
+            //ConexaoElep.fechaConexao(conexao);
+            ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQl " + erro.getMessage());
         } finally {

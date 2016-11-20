@@ -43,48 +43,44 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <%
-                                ArrayList<Venda> lista = new ArrayList();
-                                lista = VendaDB.listaVenda();
 
-                                out.println("<table class=\"table table-bordered\">");
-                                out.println("<thead>");
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <%
+                            ArrayList<Venda> lista = new ArrayList();
+                            lista = VendaDB.listaVenda();
+
+                            out.println("<table class=\"table table-bordered\">");
+                            out.println("<thead>");
+                            out.println("<tr>");
+                            out.println("<th>Cliente</th>");
+                            out.println("<th>Cep</th>");
+                            out.println("<th>Produto</th>");
+                            out.println("<th>Data</th>");
+                            out.println("<th>Quantidade</th>");
+                            out.println("<th>Pagamento</th>");
+                            out.println("<th>Valor</th>");
+                            out.println("<th>Ações</th>");
+                            out.println("</tr>");
+                            out.println("</thead>");
+                            out.println("<tbody>");
+                            for (int i = 0; i < lista.size(); i++) {
+                                Venda cli = lista.get(i);
                                 out.println("<tr>");
-                                out.println("<th>Cliente</th>");
-                                out.println("<th>Cep</th>");
-                                out.println("<th>Produto</th>");
-                                out.println("<th>Venda</th>");
-                                out.println("<th>Data</th>");
-                                out.println("<th>Quantidade</th>");
-                                out.println("<th>Pagamento</th>");
-                                out.println("<th>Valor</th>");
-                                out.println("<th>Ações</th>");
+                                out.println("<td>" + cli.getCliCodigo() + "</td>");
+                                out.println("<td>" + cli.getCep() + "</td>");
+                                out.println("<td>" + cli.getProCodigo() + "</td>");
+                                out.println("<td>" + cli.getData() + "</td>");
+                                out.println("<td>" + cli.getQtdVenda() + "</td>");
+                                out.println("<td>" + cli.getDataPagto() + "</td>");
+                                out.println("<td>" + cli.getValorPagto() + "</td>");
+                                //out.println("<td><a href=\"excluiCliente.jsp?codigo=" + cli.getCliCodigo() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a><a href=\"alteraCliente.jsp?codigo=" + cli.getCliCodigo() + "&cep=" + cli.getCep() + "&nome=" + cli.getNome() + "&endereco="+ cli.getEndereco() + "&sexo=" + cli.getSexo() + "&dt_nascto=" + cli.getDtNascto() + "&saldo=" + cli.getSaldoDevedor() + "&ativo=" + cli.getAtivo() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
                                 out.println("</tr>");
-                                out.println("</thead>");
-                                out.println("<tbody>");
+                            }
 
-                                for (int i = 0; i < lista.size(); i++) {
-                                    Venda cli = lista.get(i);
-                                    out.println("<tr>");
-                                    out.println("<td>" + cli.getCliCodigo() + "</td>");
-                                    out.println("<td>" + cli.getCep() + "</td>");
-                                    out.println("<td>" + cli.getProCodigo() + "</td>");
-                                    out.println("<td>" + cli.getvCodigo() + "</td>");
-                                    out.println("<td>" + cli.getData() + "</td>");
-                                    out.println("<td>" + cli.getQtdVenda() + "</td>");
-                                    out.println("<td>" + cli.getDataPagto() + "</td>");
-                                    out.println("<td>" + cli.getValorPagto() + "</td>");
-                                    //out.println("<td><a href=\"excluiCliente.jsp?codigo=" + cli.getCliCodigo() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a><a href=\"alteraCliente.jsp?codigo=" + cli.getCliCodigo() + "&cep=" + cli.getCep() + "&nome=" + cli.getNome() + "&endereco="+ cli.getEndereco() + "&sexo=" + cli.getSexo() + "&dt_nascto=" + cli.getDtNascto() + "&saldo=" + cli.getSaldoDevedor() + "&ativo=" + cli.getAtivo() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
-                                    out.println("</tr>");
-                                }
-
-                                out.println("</tbody>");
-                                out.println("</table>");
-                            %> 
-                        </div>
+                            out.println("</tbody>");
+                            out.println("</table>");
+                        %> 
                     </div>
                 </div>
             </div>

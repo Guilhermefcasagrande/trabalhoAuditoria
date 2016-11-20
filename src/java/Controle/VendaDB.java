@@ -6,6 +6,7 @@
 package Controle;
 
 import Conexao.ConexaoElep;
+import Conexao.ConexaoPostgres;
 import Modelo.Venda;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +29,8 @@ public class VendaDB {
     public static boolean insereVenda(Venda venda) {
         boolean inseriu = false;
         try {
-            Connection conexao = ConexaoElep.getConnection();
+            //Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlInsere);
             pstmt.setInt(1, venda.getCliCodigo());
             pstmt.setInt(2, venda.getCep());
@@ -36,13 +38,13 @@ public class VendaDB {
             pstmt.setString(4, venda.getData());
             pstmt.setInt(5, venda.getQtdVenda());
             pstmt.setString(6, venda.getDataPagto());
-            pstmt.setDouble(7, venda.getValorPagto());            
-            
+            pstmt.setDouble(7, venda.getValorPagto());
+
             pstmt.execute();
             pstmt.close();
 
             inseriu = true;
-
+            ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL " + erro.getMessage());
         } finally {
@@ -54,33 +56,32 @@ public class VendaDB {
         ArrayList lista = new ArrayList();
 
         try {
-            Connection conexao = ConexaoElep.getConnection();
+            //Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
             Statement stm = conexao.createStatement();
             ResultSet rs = stm.executeQuery(sqlLista);
             while (rs.next()) {
                 int cliente = rs.getInt("cli_codigo");
                 int cep = rs.getInt("cep");
                 int produto = rs.getInt("pro_codigo");
-                int venda = rs.getInt("v_codigo");
                 String data = rs.getString("data");
                 int qtd = rs.getInt("qtd_venda");
                 String dataPagto = rs.getString("data_pagto");
                 double valor = rs.getDouble("valor_pagto");
 
                 Venda auxVenda = new Venda();
-                
+
                 auxVenda.setCliCodigo(cliente);
                 auxVenda.setCep(cep);
                 auxVenda.setProCodigo(produto);
-                auxVenda.setvCodigo(venda);
                 auxVenda.setData(data);
                 auxVenda.setDataPagto(dataPagto);
                 auxVenda.setQtdVenda(qtd);
                 auxVenda.setValorPagto(valor);
-                
-                lista.add(produto);
-            }
 
+                lista.add(auxVenda);
+            }
+            ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL: " + erro.getMessage());
         } finally {
@@ -88,7 +89,7 @@ public class VendaDB {
         }
 
     }
-/*
+    /*
     public static boolean excluiProduto(Produto produto) {
         boolean excluiu = false;
 

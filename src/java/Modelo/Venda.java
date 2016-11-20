@@ -83,6 +83,5 @@ public class Venda {
     public void setValorPagto(double valorPagto) {
         this.valorPagto = valorPagto;
     }
-    
-    
+
 }

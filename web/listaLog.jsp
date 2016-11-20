@@ -46,59 +46,57 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <%
-                                User user = (User) session.getAttribute("user");
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <%
+                            User user = (User) session.getAttribute("user");
 
-                                if (user == null) {
-                                    session.invalidate();
-                                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                                } else {
-                                    String acao = "Consultar";
-                                    VerificaAcao verifica = new VerificaAcao();
-                                    int acCodigo = verifica.buscaAcao(acao);
+                            if (user == null) {
+                                session.invalidate();
+                                request.getRequestDispatcher("login.jsp").forward(request, response);
+                            } else {
+                                String acao = "Consultar";
+                                VerificaAcao verifica = new VerificaAcao();
+                                int acCodigo = verifica.buscaAcao(acao);
 
-                                    Log log = new Log();
-                                    log.setAcCodigo(acCodigo);
-                                    log.setUsrCodigo(user.getUsrCodigo());
-                                    log.setTabela("Log");
-                                    
-                                    GravaLog.log(log);
+                                Log log = new Log();
+                                log.setAcCodigo(acCodigo);
+                                log.setUsrCodigo(user.getUsrCodigo());
+                                log.setTabela("Log");
 
-                                    ArrayList<Log> lista = new ArrayList();
-                                    lista = LogDB.listaLog();
+                                GravaLog.log(log);
 
-                                    out.println("<table class=\"table table-bordered\">");
-                                    out.println("<thead>");
+                                ArrayList<Log> lista = new ArrayList();
+                                lista = LogDB.listaLog();
+
+                                out.println("<table class=\"table table-bordered\">");
+                                out.println("<thead>");
+                                out.println("<tr>");
+                                out.println("<th>Código</th>");
+                                out.println("<th>Ação</th>");
+                                out.println("<th>Usuário</th>");
+                                out.println("<th>Data da Execução</th>");
+                                out.println("<th>Tabela</th>");
+                                out.println("</tr>");
+                                out.println("</thead>");
+                                out.println("<tbody>");
+
+                                for (int i = 0; i < lista.size(); i++) {
+                                    Log lg = lista.get(i);
                                     out.println("<tr>");
-                                    out.println("<th>Código</th>");
-                                    out.println("<th>Ação</th>");
-                                    out.println("<th>Usuário</th>");
-                                    out.println("<th>Data da Execução</th>");
-                                    out.println("<th>Tabela</th>");
+                                    out.println("<td>" + lg.getCdLog() + "</td>");
+                                    out.println("<td>" + lg.getAcCodigo() + "</td>");
+                                    out.println("<td>" + lg.getUsrCodigo() + "</td>");
+                                    out.println("<td>" + lg.getDtExecucao() + "</td>");
+                                    out.println("<td>" + lg.getTabela() + "</td>");
                                     out.println("</tr>");
-                                    out.println("</thead>");
-                                    out.println("<tbody>");
-
-                                    for (int i = 0; i < lista.size(); i++) {
-                                        Log lg = lista.get(i);
-                                        out.println("<tr>");
-                                        out.println("<td>" + lg.getCdLog() + "</td>");
-                                        out.println("<td>" + lg.getAcCodigo() + "</td>");
-                                        out.println("<td>" + lg.getUsrCodigo() + "</td>");
-                                        out.println("<td>" + lg.getDtExecucao() + "</td>");
-                                        out.println("<td>" + lg.getTabela() + "</td>");
-                                        out.println("</tr>");
-                                    }
-
-                                    out.println("</tbody>");
-                                    out.println("</table>");
                                 }
 
-                            %> 
-                        </div>
+                                out.println("</tbody>");
+                                out.println("</table>");
+                            }
+
+                        %> 
                     </div>
                 </div>
             </div>

@@ -4,6 +4,11 @@
     Author     : guilherme
 --%>
 
+<%@page import="Conexao.ConexaoPostgres"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="Conexao.ConexaoElep"%>
+<%@page import="java.sql.Connection"%>
 <%@page import="Modelo.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -52,17 +57,66 @@
                 <form role="form" action="trataVenda.jsp" method="post">
                     <div class="form-group">
                         <label>Cliente</label>
-                        <input class="form-control" name="cliente" id="cliente">
+                        <select class="form-control" id="cliente" name="cliente">
+                            <%
+                                String sql = "select cli_codigo, nome from cliente order by cli_codigo";
+
+                                //Connection conexao = ConexaoElep.getConnection();
+                                Connection conexao = ConexaoPostgres.getConnection();
+                                Statement stm = conexao.createStatement();
+                                ResultSet rs = stm.executeQuery(sql);
+                                while (rs.next()) {
+                                    int cliCodigo = rs.getInt("cli_codigo");
+                                    String nome = rs.getString("nome");
+
+                                    out.println("<option value=" + cliCodigo + ">" + nome + "</option>");
+                                }
+                                //ConexaoElep.fechaConexao(conexao);
+                                ConexaoPostgres.fechaConexao(conexao);
+                            %>
+                        </select>
                     </div>
 
                     <div class="form-group">
                         <label>CEP</label>
-                        <input class="form-control" name="cep" id="cep">
+                        <select class="form-control" id="cep" name="cep">
+                            <%
+                                String sqlCep = "select cep, nome from cidade order by cep";
+                                //Connection conexao2 = ConexaoElep.getConnection();
+                                Connection conexao2 = ConexaoPostgres.getConnection();
+                                Statement stm2 = conexao2.createStatement();
+                                ResultSet rs2 = stm2.executeQuery(sqlCep);
+                                while (rs2.next()) {
+                                    int cep = rs2.getInt("cep");
+                                    String nome = rs2.getString("nome");
+
+                                    out.println("<option value=" + cep + ">" + nome + "</option>");
+                                }
+                                //ConexaoElep.fechaConexao(conexao2);
+                                ConexaoPostgres.fechaConexao(conexao);
+                            %>
+                        </select>
                     </div>
 
                     <div class="form-group">
                         <label>Produto</label>
-                        <input class="form-control" name="produto" id="produto">
+                        <select class="form-control" id="produto" name="produto">
+                            <%
+                                String sqlProd = "select pro_codigo, descricao from produto order by pro_codigo";
+                                //Connection conexao3 = ConexaoElep.getConnection();
+                                Connection conexao3 = ConexaoPostgres.getConnection();
+                                Statement stm3 = conexao3.createStatement();
+                                ResultSet rs3 = stm3.executeQuery(sqlProd);
+                                while (rs3.next()) {
+                                    int produto = rs3.getInt("pro_codigo");
+                                    String descricao = rs3.getString("descricao");
+
+                                    out.println("<option value=" + produto + ">" + descricao + "</option>");
+                                }
+                                //ConexaoElep.fechaConexao(conexao3);
+                                ConexaoPostgres.fechaConexao(conexao);
+                            %>
+                        </select>
                     </div>
 
                     <div class="form-group">

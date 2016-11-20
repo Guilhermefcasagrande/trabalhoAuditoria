@@ -84,6 +84,4 @@ public class Cliente {
         this.ativo = ativo;
     }
     
-    
-    
 }

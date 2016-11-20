@@ -29,8 +29,8 @@ public class CidadeDB {
     public static boolean insereCidade(Cidade cidade) {
         boolean inseriu = false;
         try {
-            //Connection conexao = ConexaoPostgres.getConnection();
-            Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
+            //Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlInsere);
             System.out.println("Cheguei!!3");
             pstmt.setInt(1, cidade.getCep());
@@ -46,8 +46,8 @@ public class CidadeDB {
              }
              */
             inseriu = true;
-            //ConexaoPostgres.fechaConexao(conexao);
-            ConexaoElep.fechaConexao(conexao);
+            ConexaoPostgres.fechaConexao(conexao);
+            //ConexaoElep.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL " + erro.getMessage());
         } finally {
@@ -59,8 +59,8 @@ public class CidadeDB {
         ArrayList lista = new ArrayList();
 
         try {
-            //Connection conexao = ConexaoPostgres.getConnection();
-            Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
+            //Connection conexao = ConexaoElep.getConnection();
             Statement stm = conexao.createStatement();
             ResultSet rs = stm.executeQuery(sqlLista);
             while (rs.next()) {
@@ -72,8 +72,8 @@ public class CidadeDB {
 
                 lista.add(cidade);
             }
-            ConexaoElep.fechaConexao(conexao);
-            //ConexaoPostgres.fechaConexao(conexao);
+            //ConexaoElep.fechaConexao(conexao);
+            ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL " + erro.getMessage());
         } finally {
@@ -86,16 +86,16 @@ public class CidadeDB {
         boolean excluiu = false;
 
         try {
-            //Connection conexao = ConexaoPostgres.getConnection();
-            Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
+            //Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlExclui);
             pstmt.setInt(1, cidade.getCep());
             int valor = pstmt.executeUpdate();
             if (valor == 1) {
                 excluiu = true;
             }
-            ConexaoElep.fechaConexao(conexao);
-            //ConexaoPostgres.fechaConexao(conexao);
+            //ConexaoElep.fechaConexao(conexao);
+            ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL " + erro.getMessage());
         } finally {
@@ -108,8 +108,8 @@ public class CidadeDB {
         boolean alterou = false;
 
         try {
-            //Connection conexao = ConexaoPostgres.getConnection();
-            Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
+            //Connection conexao = ConexaoElep.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlAltera);
 
             pstmt.setInt(1, cidade.getCep());
@@ -121,8 +121,8 @@ public class CidadeDB {
             if (valor == 1) {
                 alterou = true;
             }
-            ConexaoElep.fechaConexao(conexao);
-            //ConexaoPostgres.fechaConexao(conexao);
+            //ConexaoElep.fechaConexao(conexao);
+            ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQl " + erro.getMessage());
         } finally {

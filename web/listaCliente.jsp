@@ -47,71 +47,68 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <%
-                                User user = (User) session.getAttribute("user");
 
-                                if (user == null) {
-                                    session.invalidate();
-                                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                                } else {
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <%
+                            User user = (User) session.getAttribute("user");
 
-                                    String acao = "Consultar";
-                                    VerificaAcao verifica = new VerificaAcao();
-                                    int acCodigo = verifica.buscaAcao(acao);
+                            if (user == null) {
+                                session.invalidate();
+                                request.getRequestDispatcher("login.jsp").forward(request, response);
+                            } else {
 
-                                    Log log = new Log();
-                                    log.setAcCodigo(acCodigo);
-                                    log.setUsrCodigo(user.getUsrCodigo());
-                                    log.setTabela("Cliente");
-                                    
-                                    GravaLog.log(log);
+                                String acao = "Consultar";
+                                VerificaAcao verifica = new VerificaAcao();
+                                int acCodigo = verifica.buscaAcao(acao);
 
-                                    ArrayList<Cliente> lista = new ArrayList();
-                                    lista = ClienteDB.listaCliente();
+                                Log log = new Log();
+                                log.setAcCodigo(acCodigo);
+                                log.setUsrCodigo(user.getUsrCodigo());
+                                log.setTabela("Cliente");
 
-                                    out.println("<table class=\"table table-bordered\">");
-                                    out.println("<thead>");
+                                GravaLog.log(log);
+
+                                ArrayList<Cliente> lista = new ArrayList();
+                                lista = ClienteDB.listaCliente();
+
+                                out.println("<table class=\"table table-bordered\">");
+                                out.println("<thead>");
+                                out.println("<tr>");
+                                out.println("<th>Código</th>");
+                                out.println("<th>Cep</th>");
+                                out.println("<th>Nome</th>");
+                                out.println("<th>Endereço</th>");
+                                out.println("<th>Sexo</th>");
+                                out.println("<th>Nascimento</th>");
+                                out.println("<th>Saldo</th>");
+                                out.println("<th>Ativo</th>");
+                                out.println("<th>Ações</th>");
+                                out.println("</tr>");
+                                out.println("</thead>");
+                                out.println("<tbody>");
+                                for (int i = 0; i < lista.size(); i++) {
+                                    Cliente cli = lista.get(i);
                                     out.println("<tr>");
-                                    out.println("<th>Código</th>");
-                                    out.println("<th>Cep</th>");
-                                    out.println("<th>Nome</th>");
-                                    out.println("<th>Endereço</th>");
-                                    out.println("<th>Sexo</th>");
-                                    out.println("<th>Nascimento</th>");
-                                    out.println("<th>Saldo</th>");
-                                    out.println("<th>Ativo</th>");
-                                    out.println("<th>Ações</th>");
+                                    out.println("<td>" + cli.getCliCodigo() + "</td>");
+                                    out.println("<td>" + cli.getCep() + "</td>");
+                                    out.println("<td>" + cli.getNome() + "</td>");
+                                    out.println("<td>" + cli.getEndereco() + "</td>");
+                                    out.println("<td>" + cli.getSexo() + "</td>");
+                                    out.println("<td>" + cli.getDtNascto() + "</td>");
+                                    out.println("<td>" + cli.getSaldoDevedor() + "</td>");
+                                    out.println("<td>" + cli.getAtivo() + "</td>");
+                                    out.println("<td><a href=\"excluiCliente.jsp?codigo=" + cli.getCliCodigo() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a>"
+                                            + "<a href=\"alteraCliente.jsp?codigo=" + cli.getCliCodigo() + "&cep=" + cli.getCep() + "&nome=" + cli.getNome() + "&endereco="
+                                            + cli.getEndereco() + "&sexo=" + cli.getSexo() + "&dt_nascto=" + cli.getDtNascto() + "&saldo=" + cli.getSaldoDevedor() + "&ativo=" + cli.getAtivo() + "\" "
+                                            + "class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
                                     out.println("</tr>");
-                                    out.println("</thead>");
-                                    out.println("<tbody>");
-
-                                    for (int i = 0; i < lista.size(); i++) {
-                                        Cliente cli = lista.get(i);
-                                        out.println("<tr>");
-                                        out.println("<td>" + cli.getCliCodigo() + "</td>");
-                                        out.println("<td>" + cli.getCep() + "</td>");
-                                        out.println("<td>" + cli.getNome() + "</td>");
-                                        out.println("<td>" + cli.getEndereco() + "</td>");
-                                        out.println("<td>" + cli.getSexo() + "</td>");
-                                        out.println("<td>" + cli.getDtNascto() + "</td>");
-                                        out.println("<td>" + cli.getSaldoDevedor() + "</td>");
-                                        out.println("<td>" + cli.getAtivo() + "</td>");
-                                        out.println("<td><a href=\"excluiCliente.jsp?codigo=" + cli.getCliCodigo() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a>"
-                                                + "<a href=\"alteraCliente.jsp?codigo=" + cli.getCliCodigo() + "&cep=" + cli.getCep() + "&nome=" + cli.getNome() + "&endereco="
-                                                + cli.getEndereco() + "&sexo=" + cli.getSexo() + "&dt_nascto=" + cli.getDtNascto() + "&saldo=" + cli.getSaldoDevedor() + "&ativo=" + cli.getAtivo() + "\" "
-                                                + "class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
-                                        out.println("</tr>");
-                                    }
-
-                                    out.println("</tbody>");
-                                    out.println("</table>");
                                 }
 
-                            %> 
-                        </div>
+                                out.println("</tbody>");
+                                out.println("</table>");
+                            }
+                        %> 
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@
 package Controle;
 
 import Conexao.ConexaoElep;
+import Conexao.ConexaoPostgres;
 import Modelo.Cliente;
 import Modelo.Log;
 import java.sql.Connection;
@@ -26,8 +27,8 @@ public class LogDB {
         ArrayList lista = new ArrayList();
 
         try {
-            //Connection conexao = ConexaoPostgres.getConnection();
-            Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
+            //Connection conexao = ConexaoElep.getConnection();
             Statement stm = conexao.createStatement();
             ResultSet rs = stm.executeQuery(sqlLista);
             while (rs.next()) {
@@ -46,8 +47,8 @@ public class LogDB {
                 
                 lista.add(log);
             }
-            ConexaoElep.fechaConexao(conexao);
-            //ConexaoPostgres.fechaConexao(conexao);
+            //ConexaoElep.fechaConexao(conexao);
+            ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL: " + erro.getMessage());
         } finally {

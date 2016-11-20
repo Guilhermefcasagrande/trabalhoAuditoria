@@ -4,6 +4,11 @@
     Author     : guilherme
 --%>
 
+<%@page import="Conexao.ConexaoPostgres"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="Conexao.ConexaoElep"%>
+<%@page import="java.sql.Connection"%>
 <%@page import="Modelo.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -52,7 +57,24 @@
                 <form role="form" action="trataCliente.jsp" method="post">
                     <div class="form-group">
                         <label>CEP</label>
-                        <input class="form-control" name="cep" id="cep">
+                        <select class="form-control" id="cep" name="cep">
+                            <%
+                                String sql = "select cep, nome from cidade order by cep";
+
+                                //Connection conexao = ConexaoElep.getConnection();
+                                Connection conexao = ConexaoPostgres.getConnection();
+                                Statement stm = conexao.createStatement();
+                                ResultSet rs = stm.executeQuery(sql);
+                                while (rs.next()) {
+                                    int cep = rs.getInt("cep");
+                                    String nome = rs.getString("nome");
+
+                                    out.println("<option value=" + cep + ">" + nome + "</option>");
+                                }
+                                //ConexaoElep.fechaConexao(conexao);
+                                ConexaoPostgres.fechaConexao(conexao);
+                            %>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -67,7 +89,10 @@
 
                     <div class="form-group">
                         <label>Sexo</label>
-                        <input class="form-control" name="sexo" id="estado">
+                        <select class="form-control" id="sexo" name="sexo">
+                            <option value="M">M</option>
+                            <option value="F">F</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -82,7 +107,10 @@
 
                     <div class="form-group">
                         <label>Ativo</label>
-                        <input class="form-control" name="ativo" id="estado">
+                       <select class="form-control" id="ativo" name="ativo">
+                            <option value="S">S</option>
+                            <option value="N">N</option>
+                        </select>
                     </div>
 
                     <div class="form-group">

@@ -47,58 +47,57 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <%
-                                User user = (User) session.getAttribute("user");
 
-                                if (user == null) {
-                                    session.invalidate();
-                                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                                } else {
-                                    
-                                    String acao = "Consultar";
-                                    VerificaAcao verifica = new VerificaAcao();
-                                    int acCodigo = verifica.buscaAcao(acao);
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <%
+                            User user = (User) session.getAttribute("user");
 
-                                    Log log = new Log();
-                                    log.setAcCodigo(acCodigo);
-                                    log.setUsrCodigo(user.getUsrCodigo());
-                                    log.setTabela("Cidade");
+                            if (user == null) {
+                                session.invalidate();
+                                request.getRequestDispatcher("login.jsp").forward(request, response);
+                            } else {
 
-                                    GravaLog.log(log);
+                                String acao = "Consultar";
+                                VerificaAcao verifica = new VerificaAcao();
+                                int acCodigo = verifica.buscaAcao(acao);
 
-                                    ArrayList<Cidade> lista = new ArrayList();
-                                    lista = CidadeDB.listaCidade();
+                                Log log = new Log();
+                                log.setAcCodigo(acCodigo);
+                                log.setUsrCodigo(user.getUsrCodigo());
+                                log.setTabela("Cidade");
 
-                                    out.println("<table class=\"table table-bordered\">");
-                                    out.println("<thead>");
+                                GravaLog.log(log);
+
+                                ArrayList<Cidade> lista = new ArrayList();
+                                lista = CidadeDB.listaCidade();
+
+                                out.println("<table class=\"table table-bordered\">");
+                                out.println("<thead>");
+                                out.println("<tr>");
+                                out.println("<th>Cep</th>");
+                                out.println("<th>Nome</th>");
+                                out.println("<th>Estado</th>");
+                                out.println("<th>Ações</th>");
+                                out.println("</tr>");
+                                out.println("</thead>");
+                                out.println("<tbody>");
+
+                                for (int i = 0; i < lista.size(); i++) {
+                                    Cidade cidade = lista.get(i);
                                     out.println("<tr>");
-                                    out.println("<th>Cep</th>");
-                                    out.println("<th>Nome</th>");
-                                    out.println("<th>Estado</th>");
-                                    out.println("<th>Ações</th>");
+                                    out.println("<td>" + cidade.getCep() + "</td>");
+                                    out.println("<td>" + cidade.getNome() + "</td>");
+                                    out.println("<td>" + cidade.getEstado() + "</td>");
+                                    out.println("<td><a href=\"excluiCidade.jsp?cep=" + cidade.getCep() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a><a href=\"alteraCidade.jsp?cep=" + cidade.getCep() + "&nome=" + cidade.getNome() + "&estado=" + cidade.getEstado() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
                                     out.println("</tr>");
-                                    out.println("</thead>");
-                                    out.println("<tbody>");
-
-                                    for (int i = 0; i < lista.size(); i++) {
-                                        Cidade cidade = lista.get(i);
-                                        out.println("<tr>");
-                                        out.println("<td>" + cidade.getCep() + "</td>");
-                                        out.println("<td>" + cidade.getNome() + "</td>");
-                                        out.println("<td>" + cidade.getEstado() + "</td>");
-                                        out.println("<td><a href=\"excluiCidade.jsp?cep=" + cidade.getCep() + "\" class=\"btn btn-danger\" role=\"button\">Excluir</a><a href=\"alteraCidade.jsp?cep=" + cidade.getCep() + "&nome=" + cidade.getNome() + "&estado=" + cidade.getEstado() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
-                                        out.println("</tr>");
-                                    }
-
-                                    out.println("</tbody>");
-                                    out.println("</table>");
                                 }
 
-                            %> 
-                        </div>
+                                out.println("</tbody>");
+                                out.println("</table>");
+                            }
+
+                        %> 
                     </div>
                 </div>
             </div>
