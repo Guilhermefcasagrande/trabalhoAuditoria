@@ -1,23 +1,24 @@
 <%-- 
-    Document   : listaVenda
-    Created on : 24/10/2016, 12:54:14
-    Author     : guilherme
+    Document   : listaAcao
+    Created on : 25/11/2016, 19:48:05
+    Author     : Guilherme
 --%>
 
+<%@page import="Modelo.Acao"%>
+<%@page import="Controle.AcaoDB"%>
+<%@page import="Controle.LogDB"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="Controle.GravaLog"%>
 <%@page import="Modelo.Log"%>
 <%@page import="Controle.VerificaAcao"%>
 <%@page import="Modelo.User"%>
-<%@page import="Controle.VendaDB"%>
-<%@page import="Modelo.Venda"%>
-<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Consulta de Vendas</title>
+        <title>Consulta de Log's</title>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/datepicker3.css" rel="stylesheet">
@@ -42,12 +43,11 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Consulta de Vendas</h1>
+                    <h1 class="page-header">Consulta de Log's</h1>
                 </div>
             </div>
 
             <div class="row">
-
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <%
@@ -57,7 +57,6 @@
                                 session.invalidate();
                                 request.getRequestDispatcher("login.jsp").forward(request, response);
                             } else {
-
                                 String acao = "Consultar";
                                 VerificaAcao verifica = new VerificaAcao();
                                 int acCodigo = verifica.buscaAcao(acao);
@@ -65,44 +64,34 @@
                                 Log log = new Log();
                                 log.setAcCodigo(acCodigo);
                                 log.setUsrCodigo(user.getUsrCodigo());
-                                log.setTabela("Venda");
+                                log.setTabela("Acao");
 
                                 GravaLog.log(log);
-                                ArrayList<Venda> lista = new ArrayList();
-                                lista = VendaDB.listaVenda();
+
+                                ArrayList<Acao> lista = new ArrayList();
+                                lista = AcaoDB.listaAcao();
 
                                 out.println("<table class=\"table table-bordered\">");
                                 out.println("<thead>");
                                 out.println("<tr>");
-                                out.println("<th>Cliente</th>");
-                                out.println("<th>Cep</th>");
-                                out.println("<th>Produto</th>");
-                                out.println("<th>Data</th>");
-                                out.println("<th>Quantidade</th>");
-                                out.println("<th>Pagamento</th>");
-                                out.println("<th>Valor</th>");
-                                out.println("<th>Ações</th>");
+                                out.println("<th>Código</th>");
+                                out.println("<th>Ação</th>");
                                 out.println("</tr>");
                                 out.println("</thead>");
                                 out.println("<tbody>");
+
                                 for (int i = 0; i < lista.size(); i++) {
-                                    Venda cli = lista.get(i);
+                                    Acao ac = lista.get(i);
                                     out.println("<tr>");
-                                    out.println("<td>" + cli.getCliCodigo() + "</td>");
-                                    out.println("<td>" + cli.getCep() + "</td>");
-                                    out.println("<td>" + cli.getProCodigo() + "</td>");
-                                    out.println("<td>" + cli.getData() + "</td>");
-                                    out.println("<td>" + cli.getQtdVenda() + "</td>");
-                                    out.println("<td>" + cli.getDataPagto() + "</td>");
-                                    out.println("<td>" + cli.getValorPagto() + "</td>");
-                                    out.println("<td><a href=\"excluiVenda.jsp?cliente=" + cli.getCliCodigo() + "&cep=" + cli.getCep() + "&produto="+cli.getProCodigo()+"\" class=\"btn btn-danger\" role=\"button\">Excluir</a>"
-                                            + "<a href=\"alteraVenda.jsp?cliente=" + cli.getCliCodigo() + "&cep=" + cli.getCep() + "&produto=" + cli.getProCodigo() + "&data=" + cli.getData() + "&qtd=" + cli.getQtdVenda()+ "&dt_pagto=" + cli.getDataPagto() + "&valor=" + cli.getValorPagto() + "\" class=\"btn btn-primary\" role=\"button\">Alterar</a></td>");
+                                    out.println("<td>" + ac.getAcCodigo() + "</td>");
+                                    out.println("<td>" + ac.getDescricao() + "</td>");
                                     out.println("</tr>");
                                 }
 
                                 out.println("</tbody>");
                                 out.println("</table>");
                             }
+
                         %> 
                     </div>
                 </div>

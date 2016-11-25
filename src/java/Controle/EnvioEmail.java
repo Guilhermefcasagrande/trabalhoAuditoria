@@ -51,7 +51,7 @@ public class EnvioEmail {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("trabalhosemauditoria@gmail.com")); //Remetente
 
-            Address[] toUser = InternetAddress //Destinatário(s)
+            Address[] toUser = InternetAddress //Destinatário
                     .parse("guilhermefranciscocasagrande@gmail.com");
 
             message.setRecipients(Message.RecipientType.TO, toUser);
@@ -69,5 +69,5 @@ public class EnvioEmail {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-    }
+    } 
 }

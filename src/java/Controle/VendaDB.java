@@ -23,8 +23,8 @@ public class VendaDB {
 
     private static String sqlInsere = "insert into venda (cli_codigo,cep,pro_codigo,data,qtd_venda,data_pagto,valor_pagto) values (?,?,?,?,?,?,?)";
     private static String sqlLista = "select * from venda";
-    //private static String sqlExclui = "delete from produto where pro_codigo = ?";
-    //private static String sqlAltera = "update produto set pro_codigo = ?, descricao = ?, preco = ?, qtd_estoque = ? where pro_codigo = ?";
+    private static String sqlExclui = "delete from venda where cli_codigo = ? and pro_codigo = ? and cep = ?";
+    private static String sqlAltera = "update venda set cli_codigo = ?, cep = ?, pro_codigo = ?, data = ?, qtd_venda = ?, data_pagto = ?, valor_pagto = ? where cli_codigo = ? and cep = ? and pro_codigo = ?";
 
     public static boolean insereVenda(Venda venda) {
         boolean inseriu = false;
@@ -89,19 +89,21 @@ public class VendaDB {
         }
 
     }
-    /*
-    public static boolean excluiProduto(Produto produto) {
+
+    public static boolean excluiVenda(Venda venda) {
         boolean excluiu = false;
 
         try {
-            Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlExclui);
-            pstmt.setInt(1, produto.getProCodigo());
+            pstmt.setInt(1, venda.getCliCodigo());
+            pstmt.setInt(2, venda.getProCodigo());
+            pstmt.setInt(3, venda.getCep());
             int valor = pstmt.executeUpdate();
             if (valor == 1) {
                 excluiu = true;
             }
-
+            ConexaoPostgres.fechaConexao(conexao);
         } catch (SQLException erro) {
             System.out.println("Erro de SQL " + erro.getMessage());
         } finally {
@@ -110,18 +112,23 @@ public class VendaDB {
 
     }
 
-    public static boolean alteraProduto(Produto produto) {
+    public static boolean alteraVenda(Venda venda) {
         boolean alterou = false;
 
         try {
-            Connection conexao = ConexaoElep.getConnection();
+            Connection conexao = ConexaoPostgres.getConnection();
             PreparedStatement pstmt = conexao.prepareStatement(sqlAltera);
 
-            pstmt.setInt(1, produto.getProCodigo());
-            pstmt.setString(2, produto.getDescricao());
-            pstmt.setDouble(3, produto.getPreco());
-            pstmt.setInt(4, produto.getQtdEstoque());
-            pstmt.setInt(5, produto.getProCodigo());
+            pstmt.setInt(1, venda.getCliCodigo());
+            pstmt.setInt(2, venda.getCep());
+            pstmt.setInt(3, venda.getProCodigo());
+            pstmt.setString(4, venda.getData());
+            pstmt.setInt(5, venda.getQtdVenda());
+            pstmt.setString(6, venda.getDataPagto());
+            pstmt.setDouble(7, venda.getValorPagto());
+            pstmt.setInt(8, venda.getCliCodigo());
+            pstmt.setInt(9, venda.getCep());
+            pstmt.setInt(10, venda.getProCodigo());
 
             int valor = pstmt.executeUpdate();
             if (valor == 1) {
@@ -134,5 +141,5 @@ public class VendaDB {
             return alterou;
         }
 
-    }*/
+    }
 }

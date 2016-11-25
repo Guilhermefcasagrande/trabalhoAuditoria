@@ -44,7 +44,7 @@ public class ValidaLogin extends HttpServlet {
         if (user == null) {
             UserDB udb = new UserDB();
             boolean alterou = udb.updateTentativasLoginErro(loginForm);
-            System.out.println("Errrouuu " + alterou);
+            System.out.println("Usuário errou o login");
 
             if (alterou == true) {
                 session.invalidate();
