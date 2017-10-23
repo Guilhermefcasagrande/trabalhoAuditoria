@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controle;
+/*package Controle;
 
 /**
  *
  * @author Guilherme
  */
-import java.util.Properties;
+/*import java.util.Properties;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -26,12 +26,13 @@ public class JavaMailApp {
         /**
          * Parâmetros de conexão com servidor Gmail
          */
-        props.put("mail.smtp.host", "smtp.gmail.com");
+        /*props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
 
+        /*
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -43,7 +44,7 @@ public class JavaMailApp {
          * Ativa Debug para sessão
          */
         //session.setDebug(true);
-
+ /*
         try {
 
             Message message = new MimeMessage(session);
@@ -58,13 +59,15 @@ public class JavaMailApp {
             /**
              * Método para enviar a mensagem criada
              */
+            /*
             Transport.send(message);
 
             System.out.println("Feito!!!");
 
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
         }
     }
 
 }
+*/
